@@ -1,6 +1,7 @@
 import { Grid, Card, CardMedia, CardContent, Container, Typography, CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
+import ViewNFTModal from './ViewNFTModal';
 
 const useStyles = makeStyles({
     heading: {
@@ -18,15 +19,19 @@ const useStyles = makeStyles({
         flexDirection: 'column'
     },
     cardMedia: {
-        paddingTop: '56.25%'
+        paddingTop: '100%'
     },
     cardContent: {
-        flexGrow: 1
+        flexGrow: 1,
+        
+    },
+    font2: {
+        fontFamily: `"Nunito", sans-serif`
     }
 
 });
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]; //Should be an array of NFTs with its metadata and image link
 
 function Gallery() {
 
@@ -48,18 +53,18 @@ function Gallery() {
                     <Grid item key={card} xs={12} sm={6} md={4}>
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardMedia}
-                                image="https://source.unsplash.com/random"
+                                image="https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg" //hardcoded
                                 title="Image Title" />
                             <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom variant='h5'>
-                                    Heading
+                                <Typography gutterBottom variant='h5' className={classes.font2}>
+                                    #{card}
                                 </Typography>
-                                <Typography>
-                                    Description of Photo
+                                <Typography className={classes.font2}>
+                                    NUS Fintech Society NFT
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small">View</Button>
+                                <ViewNFTModal imageLink='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'/>
                             </CardActions>
                         </Card>
                     </Grid>
