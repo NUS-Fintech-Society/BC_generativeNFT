@@ -1,9 +1,14 @@
+import { Typography } from '@material-ui/core';
 import React from 'react';
 
-class Mint extends React.Component {
-    render() {
-        return <h1>This is the mint page</h1>;
-    }
+function Mint() {
+    return (
+        <>
+            <Typography variant='h3'>
+                Mint Page
+            </Typography>
+        </>
+    );
 }
 
 export default Mint;

@@ -15,21 +15,22 @@ const useStyles = makeStyles({
         transform: 'translate(-50%, -50%)',
         backgroundColor: 'white',
         borderRadius: '5px',
-        padding: '20px',
+        padding: '30px',
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
-        width: '90%',
+        width: '75%',
         maxWidth: '900px'
     },
     mediaContainer: {
         minWidth: '300px',
         minHeight: '300px',
-        borderRadius: '5px'
+        borderRadius: '5px',
+        
     },
     image: {
         width: '100%',
-        maxWidth: '450px',
+        maxWidth: '400px',
     },
     descContainer: {
         padding: '20px',

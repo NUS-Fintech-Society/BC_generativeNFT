@@ -37,7 +37,7 @@ function Gallery() {
 
     const classes = useStyles();
     return (
-        <div>
+        <>
             <Container maxWidth="sm">
                 <Typography variant="h4" align="center" className={classes.heading} gutterBottom>
                     NUS Fintech Society Gallery
@@ -72,7 +72,7 @@ function Gallery() {
 
                 </Grid>
             </Container>
-        </div>
+        </>
 
     )
 }
