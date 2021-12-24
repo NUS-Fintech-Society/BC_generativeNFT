@@ -10,8 +10,8 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        width: '250px',
-        height: '250px'
+        width: '200px',
+        height: '200px'
 
     },
     addressLine: {
@@ -37,7 +37,8 @@ const useStyles = makeStyles({
         fontFamily: `"Roboto", sans-serif`
     },
     walletBlock: {
-        display: 'flex'
+        display: 'flex',
+        width: '375px'
     },
     cardGrid: {
         padding: '10vh 0'
