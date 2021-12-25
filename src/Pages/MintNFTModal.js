@@ -1,10 +1,5 @@
 import * as React from 'react';
-import Backdrop from '@material-ui/core/Backdrop';
-import Box from '@material-ui/core/Box';
-import Modal from '@material-ui/core/Modal';
-import Fade from '@material-ui/core/Fade';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import { Backdrop, Box, Modal, Fade, Button, Typography, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -26,7 +21,7 @@ const useStyles = makeStyles({
         minWidth: '300px',
         minHeight: '300px',
         borderRadius: '5px',
-        
+
     },
     image: {
         width: '100%',
@@ -36,6 +31,33 @@ const useStyles = makeStyles({
         padding: '20px',
         maxWidth: '300px',
         margin: 'auto 0'
+    },
+    numberTextField: {
+        //color: '#2C2C2C',
+        width: '70px',
+
+    },
+    mintingBlock: {
+        marginTop: '40px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '230px'
+    },
+    collectionHeader: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontWeight: '600'
+    },
+    collectionStats: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontSize: '14px'
+    },
+    mintButton: {
+        backgroundColor: '#2C2C2C',
+        color: 'white',
+        "&:hover": {
+            backgroundColor: 'black',
+        }
     }
 
 });
@@ -48,7 +70,7 @@ function MintNFTModal(props) {
 
     return (
         <>
-            <Button onClick={handleOpen}>Mint</Button>
+            <Button onClick={handleOpen} className={classes.mintButton}>Mint</Button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -65,16 +87,38 @@ function MintNFTModal(props) {
                         <Box className={classes.mediaContainer}>
                             <img
                                 src={props.imageLink}
-                                alt="Image" 
+                                alt="Image"
                                 className={classes.image} />
                         </Box>
                         <Box className={classes.descContainer}>
-                            <Typography id="transition-modal-title" variant="h6">
-                                Text in a modal
+                            <Typography id="transition-modal-title" variant="h4" className={classes.collectionHeader}>
+                                Minting {props.title}
                             </Typography>
-                            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                            <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
+                                No. of NFTs in Supply: 300
                             </Typography>
+                            <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
+                                No. of NFTs Remaining: 300
+                            </Typography>
+                            <Box className={classes.mintingBlock}>
+                                <TextField
+                                    required
+                                    id="outlined-number"
+                                    label="Number"
+                                    type="number"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                    className={classes.numberTextField}
+                                />
+                                <Box>
+                                    <Button className={classes.mintButton}>
+                                        Mint Now
+                                    </Button>
+                                </Box>
+
+                            </Box>
+
                         </Box>
 
                     </Box>

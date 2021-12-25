@@ -20,10 +20,10 @@ const useStyles = makeStyles({
         marginLeft: '10px'
     },
     newsBlock: {
-        marginBottom: '30px'
+        marginBottom: '30px',
     },
     helloBlock: {
-        marginBottom: '30px'
+        marginBottom: '100px'
     }
 });
 

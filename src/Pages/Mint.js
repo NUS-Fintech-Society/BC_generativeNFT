@@ -71,6 +71,10 @@ const useStyles = makeStyles({
     font2: {
         fontFamily: `"Nunito", sans-serif`
     },
+    cardContentHeader: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontWeight: '600'
+    },
     profileDetailsBlock: {
         display: 'flex',
         flexWrap: 'wrap',
@@ -82,6 +86,10 @@ const useStyles = makeStyles({
     profileDesc: {
         width: '400px',
         fontFamily: `"Nunito", sans-serif`
+    },
+    cardContentBlock: {
+        display: 'flex',
+        padding: '20px'
     }
 
 })
@@ -189,19 +197,24 @@ function Mint() {
                                 <CardMedia className={classes.cardMedia}
                                     image="https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg" //hardcoded
                                     title="Image Title" />
-                                <CardContent className={classes.cardContent}>
-                                    <Typography gutterBottom variant='h5' className={classes.font2}>
-                                        {collection.name}
-                                    </Typography>
-                                    <Typography className={classes.font2}>
-                                        {collection.description}
-                                    </Typography>
-                                </CardContent>
-                                <CardActions>
-                                    {selectedAccount && //Only able to Mint when Connected to address
-                                        <MintNFTModal imageLink='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg' />
-                                    }
-                                </CardActions>
+                                <Box className={classes.cardContentBlock}>
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom variant='h5' className={classes.cardContentHeader}>
+                                            {collection.name}
+                                        </Typography>
+                                        <Typography className={classes.font2}>
+                                            {collection.description}
+                                        </Typography>
+                                    </CardContent>
+                                    <CardActions>
+                                        {selectedAccount && //Only able to Mint when Connected to address
+                                            <MintNFTModal
+                                                imageLink='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'
+                                                title={collection.name} />
+                                        }
+                                    </CardActions>
+                                </Box>
+
                             </Card>
                         </Grid>
                     ))};
