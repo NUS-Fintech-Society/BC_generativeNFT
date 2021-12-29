@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Typography, Box, Grid, Card, CardMedia, CardContent, Container, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import MintNFTModal from './MintNFTModal';
+import MintNFTModal from '../Modals/MintNFTModal';
+import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
+import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
 const nftCollection1 = {
     name: 'The First Collection',
@@ -96,67 +98,34 @@ const useStyles = makeStyles({
 
 function Mint() {
     const classes = useStyles();
-    let address = null;
-    if (localStorage.getItem('address') !== null) {
-        address = localStorage.getItem('address');
-    }
+    const [walletAddress, setWallet] = useState("");
 
-    const [selectedAccount, setSelectedAccount] = useState(address);
+    useEffect(async () => {
+        const connectedWalletAddress = await getCurrentWalletConnected();
+        setWallet(connectedWalletAddress);
 
-    useEffect(() => {
-        console.log('Profile Page has been mounted.');
+        addWalletListener()
+    }, []);
 
-        if (localStorage.getItem('has10MinuteTimerBeenSet') === null) {
-            console.log('Created 10 Minute Timer');
-            setTimeout(() => {
-                setSelectedAccount(() => null);
-                localStorage.removeItem('address');
-                localStorage.removeItem('has10MinuteTimerBeenSet');
-                console.log("10 MINUTES PASSED. LocalStorage removed wallet address.");
+    const connectWalletPressed = async () => {
+        const walletAddress = await connectWallet();
 
-                window.location.reload(); //Refresh page
-            }, 600000); //10 minutes 600000 //5 Seconds 5000
+        setWallet(walletAddress);
+    };
 
-            localStorage.setItem('has10MinuteTimerBeenSet', true);
-        }
+    function addWalletListener() {
+        if (window.ethereum) {
+            window.ethereum.on("accountsChanged", (accounts) => {
+                if (accounts.length > 0) {
+                    setWallet(accounts[0]);
 
-    })
-
-
-
-    async function handleConnection() {
-        let provider = window.ethereum;
-
-        if (typeof provider !== 'undefined') {
-
-            await provider.request({ method: 'eth_requestAccounts' })
-                .then((accounts) => {
-                    setSelectedAccount(() => accounts[0]);
-                    localStorage.setItem('address', accounts[0]); //need to set timer to remove the local storage
-                }).catch((err) => {
-                    console.log(err);
-                })
-
-            //switching metamask accounts
-            window.ethereum.on('accountsChanged', function (accounts) {
-                if (accounts.length === 0) { //MetaMask is Locked
-                    setSelectedAccount(() => null);
-                    localStorage.removeItem('address');
-                    localStorage.removeItem('has10MinuteTimerBeenSet');
-                    console.log('Window has detected that MetaMask is locked.');
-
-                    window.location.reload(); //Refresh page
                 } else {
-                    setSelectedAccount(() => accounts[0]);
-                    localStorage.setItem('address', accounts[0]);
+                    setWallet("");
 
                 }
-                console.log('Window has detected a change in accounts/metamask is locked.');
-            })
-
-            console.log('Use has clicked on CONNECT');
+            });
         } else {
-            alert('Sorry. It appears you do not have MetaMask.');
+            alert('Sorry, it appears you do not have MetaMask. You must install Metamask, a virtual Ethereum wallet, in your browser.');
         }
     }
 
@@ -164,21 +133,21 @@ function Mint() {
         <>
             <Box className={classes.profileDetailsBlock}>
                 <Box className={classes.walletBlock}>
-                    <WalletAddressDisplay address={selectedAccount} />
+                    <WalletAddressDisplay address={walletAddress} />
                     <Box>
-                        {/* If not connected yet */}
-                        {(!selectedAccount) ? (
-                            <Button
-                                variant='contained'
-                                disableElevation
-                                onClick={handleConnection}
-                                className={classes.connectButton}>
-                                Connect
-                            </Button>
-                        ) : (
+                        {/* If connected */}
+                        {(walletAddress.length > 0) ? (
                             <Box className={classes.connected}>
                                 YOU'RE CONNECTED
                             </Box>
+                        ) : (
+                            <Button
+                                variant='contained'
+                                disableElevation
+                                onClick={connectWalletPressed}
+                                className={classes.connectButton}>
+                                Connect
+                            </Button>
                         )}
                     </Box>
                 </Box>
@@ -210,7 +179,7 @@ function Mint() {
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        {selectedAccount && //Only able to Mint when Connected to address
+                                        {walletAddress.length > 0 && //Only able to Mint when Connected to address
                                             <MintNFTModal
                                                 imageLink='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'
                                                 title={collection.name} />
@@ -224,36 +193,8 @@ function Mint() {
 
                 </Grid>
             </Container>
-
-
-
-
         </>
-
     );
-}
-
-function WalletAddressDisplay(props) {
-    const classes = useStyles();
-    let address = props.address;
-    let addressBlock = [];
-    if (address !== null) {
-        for (let i = 0; i < address.length; i = i + 10) {
-            addressBlock.push(address.substring(i, i + 10));
-        }
-    }
-    return (
-        <>
-            <Box className={classes.addressBlock}>
-                {addressBlock.map(block => (
-                    <Typography variant='h6' className={classes.addressLine} key={block}>
-                        {block}
-                    </Typography>
-                ))}
-
-            </Box>
-        </>
-    )
 }
 
 export default Mint;

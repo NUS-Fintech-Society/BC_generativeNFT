@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Typography, Box, Grid, Card, CardMedia, CardContent, Container, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
-import ViewNFTModal from './ViewNFTModal';
+import ViewNFTModal from '../Modals/ViewNFTModal';
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]; //Should be an array of NFTs with its metadata and image link

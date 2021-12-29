@@ -1,7 +1,7 @@
 import { Grid, Card, CardMedia, CardContent, Container, Typography, CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
-import ViewNFTModal from './ViewNFTModal';
+import ViewNFTModal from '../Modals/ViewNFTModal';
 
 const useStyles = makeStyles({
     heading: {
