@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Typography, Box, Grid, Card, CardMedia, CardContent, Container, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
 import ViewNFTModal from './ViewNFTModal';
+import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]; //Should be an array of NFTs with its metadata and image link
 
@@ -73,67 +75,38 @@ const useStyles = makeStyles({
 
 })
 
+
+
 function Profile() {
     const classes = useStyles();
-    let address = null;
-    if (localStorage.getItem('address') !== null) {
-        address = localStorage.getItem('address');
-    }
+    const [walletAddress, setWallet] = useState("");
 
-    const [selectedAccount, setSelectedAccount] = useState(address);
+    useEffect(async () => {
+        const connectedWalletAddress = await getCurrentWalletConnected();
+        setWallet(connectedWalletAddress);
 
-    useEffect(() => {
-        console.log('Profile Page has been mounted.');
+        addWalletListener()
+    }, []);
 
-        if (localStorage.getItem('has10MinuteTimerBeenSet') === null) {
-            console.log('Created 10 Minute Timer');
-            setTimeout(() => {
-                localStorage.removeItem('address');
-                setSelectedAccount(() => null);
-                localStorage.removeItem('has10MinuteTimerBeenSet');
-                console.log("10 MINUTES PASSED. LocalStorage removed wallet address.");
+    const connectWalletPressed = async () => {
+        const walletAddress = await connectWallet();
 
-                location.reload(); //Refresh page
-            }, 600000); //10 minutes 600000 //5 Seconds 5000
+        setWallet(walletAddress);
+    };
 
-            localStorage.setItem('has10MinuteTimerBeenSet', true);
-        }
-
-    })
-
-
-
-    async function handleConnection() {
-        let provider = window.ethereum;
-
-        if (typeof provider !== 'undefined') {
-
-            await provider.request({ method: 'eth_requestAccounts' })
-                .then((accounts) => {
-                    setSelectedAccount(() => accounts[0]);
-                    localStorage.setItem('address', accounts[0]); //need to set timer to remove the local storage
-                }).catch((err) => {
-                    console.log(err);
-                })
-
-            //switching metamask accounts
-            window.ethereum.on('accountsChanged', function (accounts) {
-                if (accounts.length === 0) { //MetaMask is Locked
-                    setSelectedAccount(() => null);
-                    localStorage.removeItem('address');
-                    console.log('Window has detected that MetaMask is locked.');
+    function addWalletListener() {
+        if (window.ethereum) {
+            window.ethereum.on("accountsChanged", (accounts) => {
+                if (accounts.length > 0) {
+                    setWallet(accounts[0]);
 
                 } else {
-                    setSelectedAccount(() => accounts[0]);
-                    localStorage.setItem('address', accounts[0]);
+                    setWallet("");
 
                 }
-                console.log('Window has detected a change in accounts/metamask is locked.');
-            })
-
-            console.log('Use has clicked on CONNECT');
+            });
         } else {
-            alert('Sorry. It appears you do not have MetaMask.');
+            alert('Sorry, it appears you do not have MetaMask. You must install Metamask, a virtual Ethereum wallet, in your browser.');
         }
     }
 
@@ -141,27 +114,27 @@ function Profile() {
         <>
             <Box className={classes.profileDetailsBlock}>
                 <Box className={classes.walletBlock}>
-                    <WalletAddressDisplay address={selectedAccount} />
+                    <WalletAddressDisplay address={walletAddress} />
                     <Box>
-                        {/* If not connected yet */}
-                        {(!selectedAccount) ? (
-                            <Button
-                                variant='contained'
-                                disableElevation
-                                onClick={handleConnection}
-                                className={classes.connectButton}>
-                                Connect
-                            </Button>
-                        ) : (
+                        {/* If connected */}
+                        {(walletAddress.length > 0) ? (
                             <Box className={classes.connected}>
                                 YOU'RE CONNECTED
                             </Box>
+                        ) : (
+                            <Button
+                                variant='contained'
+                                disableElevation
+                                onClick={connectWalletPressed}
+                                className={classes.connectButton}>
+                                Connect
+                            </Button>
                         )}
                     </Box>
                 </Box>
                 <Box>
                     <Typography variant='h4' className={classes.profileHeader} gutterBottom>
-                            Profile
+                        Profile
                     </Typography>
                     <Typography variant='h6' className={classes.profileDesc}>
                         Upon connecting to your MetaMask wallet, you can view all your minted NUS Fintech Society NFTs here.
@@ -194,36 +167,8 @@ function Profile() {
 
                 </Grid>
             </Container>
-
-
-
-
         </>
-
     );
-}
-
-function WalletAddressDisplay(props) {
-    const classes = useStyles();
-    let address = props.address;
-    let addressBlock = [];
-    if (address !== null) {
-        for (let i = 0; i < address.length; i = i + 10) {
-            addressBlock.push(address.substring(i, i + 10));
-        }
-    }
-    return (
-        <>
-            <Box className={classes.addressBlock}>
-                {addressBlock.map(block => (
-                    <Typography variant='h6' className={classes.addressLine} key={block}>
-                        {block}
-                    </Typography>
-                ))}
-
-            </Box>
-        </>
-    )
 }
 
 export default Profile;

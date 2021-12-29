@@ -70,7 +70,7 @@ function MintNFTModal(props) {
 
     return (
         <>
-            <Button onClick={handleOpen} className={classes.mintButton}>Mint</Button>
+            <Button onClick={handleOpen} className={classes.mintButton, classes.mintButton}>Mint</Button>
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"

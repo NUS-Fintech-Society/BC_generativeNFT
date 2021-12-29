@@ -113,6 +113,8 @@ function Mint() {
                 localStorage.removeItem('address');
                 localStorage.removeItem('has10MinuteTimerBeenSet');
                 console.log("10 MINUTES PASSED. LocalStorage removed wallet address.");
+
+                window.location.reload(); //Refresh page
             }, 600000); //10 minutes 600000 //5 Seconds 5000
 
             localStorage.setItem('has10MinuteTimerBeenSet', true);
@@ -143,7 +145,7 @@ function Mint() {
                     localStorage.removeItem('has10MinuteTimerBeenSet');
                     console.log('Window has detected that MetaMask is locked.');
 
-                    location.reload(); //Refresh page
+                    window.location.reload(); //Refresh page
                 } else {
                     setSelectedAccount(() => accounts[0]);
                     localStorage.setItem('address', accounts[0]);
