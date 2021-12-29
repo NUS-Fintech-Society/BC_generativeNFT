@@ -92,6 +92,8 @@ function Profile() {
                 setSelectedAccount(() => null);
                 localStorage.removeItem('has10MinuteTimerBeenSet');
                 console.log("10 MINUTES PASSED. LocalStorage removed wallet address.");
+
+                location.reload(); //Refresh page
             }, 600000); //10 minutes 600000 //5 Seconds 5000
 
             localStorage.setItem('has10MinuteTimerBeenSet', true);

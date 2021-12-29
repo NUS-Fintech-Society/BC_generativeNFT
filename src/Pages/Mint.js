@@ -143,6 +143,7 @@ function Mint() {
                     localStorage.removeItem('has10MinuteTimerBeenSet');
                     console.log('Window has detected that MetaMask is locked.');
 
+                    location.reload(); //Refresh page
                 } else {
                     setSelectedAccount(() => accounts[0]);
                     localStorage.setItem('address', accounts[0]);
