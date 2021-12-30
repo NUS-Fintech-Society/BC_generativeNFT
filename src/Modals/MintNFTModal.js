@@ -95,11 +95,13 @@ function MintNFTModal(props) {
                                 Minting {props.title}
                             </Typography>
                             <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
-                                No. of NFTs in Supply: 300
-                            </Typography>
-                            <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
                                 No. of NFTs Remaining: 300
                             </Typography>
+                            <TextField
+                                required
+                                id="filled-required"
+                                label="Access Code"
+                            />
                             <Box className={classes.mintingBlock}>
                                 <TextField
                                     required
@@ -110,6 +112,11 @@ function MintNFTModal(props) {
                                         shrink: true,
                                     }}
                                     className={classes.numberTextField}
+                                    onChange={(event) =>
+                                        event.target.value < 0
+                                            ? (event.target.value = 0)
+                                            : event.target.value
+                                    }
                                 />
                                 <Box>
                                     <Button className={classes.mintButton}>
