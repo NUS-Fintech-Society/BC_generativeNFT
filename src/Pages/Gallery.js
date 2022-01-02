@@ -64,7 +64,7 @@ function Gallery() {
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <ViewNFTModal imageLink='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'/>
+                                <ViewNFTModal id={card} image='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'/>
                             </CardActions>
                         </Card>
                     </Grid>

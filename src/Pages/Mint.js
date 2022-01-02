@@ -5,20 +5,27 @@ import MintNFTModal from '../Modals/MintNFTModal';
 import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
+import firstCollectionBanner from '../assets/images/first_collection_banner.png'
+
 const nftCollection1 = {
     name: 'The First Collection',
-    description: 'The first collection of NFTs for NUS Fintech Society'
+    description: 'The first collection of NFTs for NUS Fintech Society',
+    image: firstCollectionBanner,
+    accessCode: 'NUSFintechSociety'
+    //image: 'https://gateway.pinata.cloud/ipfs/QmTf7qyZXxSwEs8eosRZt57AdxY1oKASDdqkt6ZMZFkptK'
 }
-const nftCollection2 = {
-    name: 'The Second Collection',
-    description: 'The second collection of NFTs for NUS Fintech Society'
-}
-const nftCollection3 = {
-    name: 'The Third Collection',
-    description: 'The third collection of NFTs for NUS Fintech Society'
-}
+// const nftCollection2 = {
+//     name: 'The Second Collection',
+//     description: 'The second collection of NFTs for NUS Fintech Society',
+//     image: 'https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'
+// }
+// const nftCollection3 = {
+//     name: 'The Third Collection',
+//     description: 'The third collection of NFTs for NUS Fintech Society',
+//     image: 'https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'
+// }
 
-const collections = [nftCollection1, nftCollection2, nftCollection3];
+const collections = [nftCollection1];
 
 const useStyles = makeStyles({
     addressBlock: {
@@ -167,8 +174,8 @@ function Mint() {
                         <Grid item key={collection.name} xs={12}>
                             <Card className={classes.card}>
                                 <CardMedia className={classes.cardMedia}
-                                    image="https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg" //hardcoded
-                                    title="Image Title" />
+                                    image={collection.image}
+                                    title={collection.name} />
                                 <Box className={classes.cardContentBlock}>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom variant='h5' className={classes.cardContentHeader}>
@@ -181,8 +188,9 @@ function Mint() {
                                     <CardActions>
                                         {walletAddress.length > 0 && //Only able to Mint when Connected to address
                                             <MintNFTModal
-                                                imageLink='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'
-                                                title={collection.name} />
+                                                imageLink={collection.image}
+                                                title={collection.name} 
+                                                accessCode={collection.accessCode}/>
                                         }
                                     </CardActions>
                                 </Box>

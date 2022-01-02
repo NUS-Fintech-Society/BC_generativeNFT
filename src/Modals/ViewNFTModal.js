@@ -64,16 +64,16 @@ function ViewNFTModal(props) {
                     <Box className={classes.modal}>
                         <Box className={classes.mediaContainer}>
                             <img
-                                src={props.imageLink}
-                                alt="Image" 
+                                src={props.image}
+                                alt={props.id + " Image"}
                                 className={classes.image} />
                         </Box>
                         <Box className={classes.descContainer}>
                             <Typography id="transition-modal-title" variant="h6">
-                                Text in a modal
+                                {props.id}
                             </Typography>
                             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                                Meta Data
                             </Typography>
                         </Box>
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Backdrop, Box, Modal, Fade, Button, Typography, TextField } from '@material-ui/core';
+import { Backdrop, Box, Modal, Fade, Button, Typography, TextField, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -21,11 +21,15 @@ const useStyles = makeStyles({
         minWidth: '300px',
         minHeight: '300px',
         borderRadius: '5px',
+        padding: '20px 0'
 
     },
     image: {
         width: '100%',
         maxWidth: '400px',
+        height: '100%',
+        maxHeight: '400px',
+        objectFit: 'cover',
     },
     descContainer: {
         padding: '20px',
@@ -52,12 +56,37 @@ const useStyles = makeStyles({
         fontFamily: `"Nunito", sans-serif`,
         fontSize: '14px'
     },
+    collectionDisclaimer: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontSize: '12px'
+    },
     mintButton: {
         backgroundColor: '#2C2C2C',
         color: 'white',
         "&:hover": {
             backgroundColor: 'black',
         }
+    },
+    mintInput: {
+        marginTop: '20px'
+    },
+    disclaimerContainer: {
+        marginTop: '20px'
+    },
+    accessCodeNotice: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontSize: '10px',
+        position: 'absolute',
+        top: '-155px'
+    },
+    accessCodeNoticeBlock: {
+        position: 'relative'
+    },
+    quoteNotice: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontSize: '10px',
+        position: 'absolute',
+        top: '-86px'
     }
 
 });
@@ -67,6 +96,41 @@ function MintNFTModal(props) {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const correctAccessCode = props.accessCode;
+
+    const [accessCode, setAccessCode] = React.useState("");
+    const [quote, setQuote] = React.useState("");
+    const [quantity, setQuantity] = React.useState(0);
+
+    const [isMinted, setIsMinted] = React.useState(false);
+
+    const handleAccessCode = (event) => {
+        setAccessCode(event.target.value);
+
+    };
+
+    const handleQuote = (event) => {
+        setQuote(event.target.value);
+    };
+
+    const handleQuantity = (event) => {
+        if (event.target.value < 0) {
+            event.target.value = 0;
+        } else {
+            setQuantity(event.target.value);
+
+        }
+    };
+
+    const handleMint = (event) => {
+        event.preventDefault();
+        if (accessCode === correctAccessCode && quantity > 0) {
+            setIsMinted(true);
+            console.log("Successful Mint");
+        } 
+        
+    };
 
     return (
         <>
@@ -91,38 +155,96 @@ function MintNFTModal(props) {
                                 className={classes.image} />
                         </Box>
                         <Box className={classes.descContainer}>
-                            <Typography id="transition-modal-title" variant="h4" className={classes.collectionHeader}>
-                                Minting {props.title}
-                            </Typography>
-                            <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
-                                No. of NFTs Remaining: 300
-                            </Typography>
-                            <TextField
-                                required
-                                id="filled-required"
-                                label="Access Code"
-                            />
-                            <Box className={classes.mintingBlock}>
-                                <TextField
-                                    required
-                                    id="outlined-number"
-                                    label="Number"
-                                    type="number"
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                    className={classes.numberTextField}
-                                    onChange={(event) =>
-                                        event.target.value < 0
-                                            ? (event.target.value = 0)
-                                            : event.target.value
+                            <Box>
+                                <Typography id="transition-modal-title" variant="h4" className={classes.collectionHeader}>
+                                    Minting {props.title}
+                                </Typography>
+                                <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
+                                    No. of NFTs Remaining: 300
+                                </Typography>
+                                <form>
+                                    <TextField
+                                        required
+                                        label="Access Code"
+                                        variant="standard"
+                                        className={classes.mintInput}
+                                        onChange={handleAccessCode}
+
+                                    />
+                                    <TextField
+                                        label="Quote"
+                                        variant="standard"
+                                        className={classes.mintInput}
+                                        onChange={handleQuote}
+                                    />
+                                    <Box className={classes.mintingBlock}>
+                                        <TextField
+                                            required
+                                            id="outlined-number"
+                                            label="Number"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            className={classes.numberTextField}
+                                            onChange={handleQuantity}
+                                        />
+                                        <Box>
+                                            {(!isMinted) ? (
+                                                <Button className={classes.mintButton} onClick={handleMint}>
+                                                    Mint Now
+                                                </Button>
+                                            ) : (
+                                                <Button className={classes.mintButton} >
+                                                    Minted
+                                                </Button>
+                                            )}
+
+                                        </Box>
+                                    </Box>
+                                </form>
+                                <Box className={classes.accessCodeNoticeBlock}>
+                                    {(accessCode.length > 0 && correctAccessCode !== accessCode) && (
+                                        <Typography variant="h6" className={classes.accessCodeNotice}>
+                                            Incorrect Access Code
+                                        </Typography>
+                                    )
                                     }
-                                />
-                                <Box>
-                                    <Button className={classes.mintButton}>
-                                        Mint Now
-                                    </Button>
+                                    {(accessCode.length > 0 && correctAccessCode === accessCode) && (
+                                        <Typography variant="h6" className={classes.accessCodeNotice}>
+                                            Correct Access Code
+                                        </Typography>
+                                    )
+                                    }
+                                    {(quote.length > 0) && (
+                                        <Typography variant="h6" className={classes.quoteNotice}>
+                                            "{quote}"
+                                        </Typography>
+                                    )}
                                 </Box>
+                            </Box>
+
+                            <Box className={classes.disclaimerContainer}>
+                                {(isMinted) ? (
+                                    <Typography variant="h6" className={classes.collectionStats}>
+                                        Congrats! Mint successful.
+                                    </Typography>
+                                )
+                                    : (
+                                        <>
+                                            <Typography sx={{ mt: 2 }} className={classes.collectionDisclaimer}>
+                                                Access Code prevents unauthorised users from minting NFT
+                                            </Typography>
+                                            <Typography sx={{ mt: 2 }} className={classes.collectionDisclaimer}>
+                                                Quote can be seen by others upon viewing your NFT(s)
+                                            </Typography>
+                                            <Typography sx={{ mt: 2 }} className={classes.collectionDisclaimer}>
+                                                Each society member should have two NFTs from this collection
+                                            </Typography>
+                                        </>
+
+                                    )}
+
 
                             </Box>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Header.css';
-import logo from './fintech_logo_white.png';
+import logo from '../assets/images/fintech_logo_white.png';
 
 import { AppBar, IconButton, Toolbar, Menu, MenuItem } from '@material-ui/core';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
