@@ -60,8 +60,9 @@ function Home() {
                     <Typography variant="h6" align="left" className={classes.description} paragraph>
                         The original team of developers has created the first collection of
                         NUS Fintech Society NFTs. This is a collection of 300 NFTs which are not only unique, but interactive as well.
-                        This collections explores the beauty of combination of simples shapes to form a more complex but intriguing pattern.
-                        Each image will be akin to staring down a diferent kaleidoscope. Go mint yourself a one-off ERC721 NFT today!
+                        This collections explores the beauty of the Sonobe module used to build modular origami. 
+                        The combination of simple shapes to form a more complex but intriguing pattern.
+                        Go mint yourself a one-off ERC721 NFT today!
                     </Typography>
                 </Box>
                 
