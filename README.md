@@ -1,14 +1,10 @@
 # NUS Fintech Society NFT Website
 
-Welcome to NUS Fintech Society Official NFT Page. This is a place made by NUS Fintech Society members for NUS Fintech Society.
+Welcome to NUS Fintech Society Official NFT Page. This is a place made by NUS Fintech Society members for NUS Fintech Society. Here, you can view all NUS Fintech Society NFT collections. There are limited number of NFTs to be minted, all are one-of-a-kind. These collections are on the Ethereum blockchain in accordance to the ERC721 NFT standard. A member can mint an NFT after initialisation into the society, after a big contribution to an ongoing project or when he/she simply feels like it.
 
-Here, you can view all NUS Fintech Society NFT collections.
-
-There are limited number of NFTs to be minted, all are one-of-a-kind.
-
-These collections are on the Ethereum blockchain in accordance to the ERC721 NFT standard.
-
-A member can mint an NFT after initialisation into the society, after a big contribution to an ongoing project or when he/she simply feels like it.
+##Screenshots
+###Home Page
+![Home Page](https://gateway.pinata.cloud/ipfs/QmNzoDP75MAja3yU3tJU8XrSoPFPnsCq2n7HbCWbfy5AVP)
 
 ## Available Scripts
 
