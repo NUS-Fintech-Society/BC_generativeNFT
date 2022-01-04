@@ -6,8 +6,9 @@ contract("Token", (accounts) => {
   // global instance of contract
   let contract;
   // stand-in baseURI
-  let baseURI = "ipfs://QmZbWNKJPAjxXuNFSEaksCJVd1M6DaKQViJBYPK2BdpDEP/";
+  let baseURI = "ipfs://bafybeid3uax2233msfrrdwncvwfswt2mathnzviohll4nbnrutws47yrmq/";
   let [alice, bob] = accounts;
+  let MAX_SUPPLY = 250
 
   before(async () => {
     contract = await Token.deployed(baseURI);
@@ -43,7 +44,7 @@ contract("Token", (accounts) => {
       let uri = await contract.tokenURI(event.tokenId);
       assert.equal(
         uri,
-        "ipfs://QmZbWNKJPAjxXuNFSEaksCJVd1M6DaKQViJBYPK2BdpDEP/0"
+        "ipfs://bafybeid3uax2233msfrrdwncvwfswt2mathnzviohll4nbnrutws47yrmq/0"
       );
       assert.equal(
         event.from,
@@ -57,7 +58,7 @@ contract("Token", (accounts) => {
     // Test Case 4: Failure when quantity exceeds
     it("should reject transaction if quantity minted exceeds max supply", async () => {
       await truffleAssert.reverts(
-        contract.mintTokens(216, { value: web3.utils.toWei("2.16", "ether") })
+        contract.mintTokens(MAX_SUPPLY, { value: web3.utils.toWei("2.50", "ether") })
       );
     });
 
@@ -119,7 +120,7 @@ contract("Token", (accounts) => {
     });
   });
 
-  describe("pausable functionalityu", async () => {
+  describe("pausable functionality", async () => {
     // Test Case 9: Failure to pause contract if called from wrong address
     it("should reject pause if called from non-owner address", async () => {
       await truffleAssert.reverts(contract.pause({ from: bob })); // alice is the owner of contract

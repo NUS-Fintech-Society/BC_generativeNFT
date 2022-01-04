@@ -12,7 +12,7 @@ contract Token is ERC721Enumerable, ERC721Pausable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds; // For indexing of tokens
 
-    uint256 public constant MAX_SUPPLY = 216;
+    uint256 public constant MAX_SUPPLY = 250;
     uint256 public constant PRICE = 0.01 ether;
 
     string public baseTokenURI;

@@ -1,6 +1,7 @@
-import * as React from 'react';
+import React, { useEffect} from 'react';
 import { Backdrop, Box, Modal, Fade, Button, Typography, TextField, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { initialiseContract, mintTokens } from '../util/contract';
 
 const useStyles = makeStyles({
     modal: {
@@ -105,6 +106,14 @@ function MintNFTModal(props) {
 
     const [isMinted, setIsMinted] = React.useState(false);
 
+    useEffect(() => {
+        async function load() {
+            initialiseContract();
+        }
+
+        load();
+    }, []);
+
     const handleAccessCode = (event) => {
         setAccessCode(event.target.value);
 
@@ -126,6 +135,7 @@ function MintNFTModal(props) {
     const handleMint = (event) => {
         event.preventDefault();
         if (accessCode === correctAccessCode && quantity > 0) {
+            mintTokens(quantity);
             setIsMinted(true);
             console.log("Successful Mint");
         } 
