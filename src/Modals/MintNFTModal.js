@@ -100,7 +100,6 @@ function MintNFTModal(props) {
     const correctAccessCode = props.accessCode;
 
     const [accessCode, setAccessCode] = React.useState("");
-    const [quote, setQuote] = React.useState("");
     const [quantity, setQuantity] = React.useState(0);
 
     const [isMinted, setIsMinted] = React.useState(false);
@@ -108,10 +107,6 @@ function MintNFTModal(props) {
     const handleAccessCode = (event) => {
         setAccessCode(event.target.value);
 
-    };
-
-    const handleQuote = (event) => {
-        setQuote(event.target.value);
     };
 
     const handleQuantity = (event) => {
@@ -160,7 +155,7 @@ function MintNFTModal(props) {
                                     Minting {props.title}
                                 </Typography>
                                 <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
-                                    No. of NFTs Remaining: 300
+                                    No. of NFTs Remaining: 250
                                 </Typography>
                                 <form>
                                     <TextField
@@ -170,12 +165,6 @@ function MintNFTModal(props) {
                                         className={classes.mintInput}
                                         onChange={handleAccessCode}
 
-                                    />
-                                    <TextField
-                                        label="Quote"
-                                        variant="standard"
-                                        className={classes.mintInput}
-                                        onChange={handleQuote}
                                     />
                                     <Box className={classes.mintingBlock}>
                                         <TextField
@@ -216,18 +205,13 @@ function MintNFTModal(props) {
                                         </Typography>
                                     )
                                     }
-                                    {(quote.length > 0) && (
-                                        <Typography variant="h6" className={classes.quoteNotice}>
-                                            "{quote}"
-                                        </Typography>
-                                    )}
                                 </Box>
                             </Box>
 
                             <Box className={classes.disclaimerContainer}>
                                 {(isMinted) ? (
                                     <Typography variant="h6" className={classes.collectionStats}>
-                                        Congrats! Mint successful.
+                                        Congrats! Mint successful. View it on Profile or your MetaMask Wallet.
                                     </Typography>
                                 )
                                     : (

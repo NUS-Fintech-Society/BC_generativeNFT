@@ -5,7 +5,27 @@ import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
 import ViewNFTModal from '../Modals/ViewNFTModal';
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]; //Should be an array of NFTs with its metadata and image link
+const nft1 = {
+    id: '0',
+    image: 'https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg',
+    collection: 'The First Collection',
+    quote: 'Hello World'
+}
+
+const nft2 = {
+    id: '1',
+    image: 'https://gateway.pinata.cloud/ipfs/QmSurs4xyqRLiuquse8utEUW82VxtSEs29r9MsedhydEfQ',
+    collection: 'The First Collection',
+    quote: 'Hello World'
+}
+
+const nft3 = {
+    id: '2',
+    image: 'https://gateway.pinata.cloud/ipfs/QmU65ogFtVPoKmPWNtthymY22xPSGxAMj2PzFv8D9D2Dy6',
+    collection: 'The First Collection',
+    quote: 'Hello World'
+}
+const nfts = [nft1, nft2, nft3]; //Should be an array of NFTs with its metadata and image link
 
 const useStyles = makeStyles({
     addressBlock: {
@@ -144,22 +164,22 @@ function Profile() {
 
             <Container className={classes.cardGrid} maxWidth="md">
                 <Grid container spacing={4}>
-                    {cards.map((card) => (
-                        <Grid item key={card} xs={12} sm={6} md={4}>
+                    {nfts.map((nft) => (
+                        <Grid item key={nft.id} xs={12} sm={6} md={4}>
                             <Card className={classes.card}>
                                 <CardMedia className={classes.cardMedia}
-                                    image="https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg" //hardcoded
-                                    title="Image Title" />
+                                    image={nft.image}
+                                    title={nft.collection + " #" + nft.id} />
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant='h5' className={classes.font2}>
-                                        #{card}
+                                        #{nft.id}
                                     </Typography>
                                     <Typography className={classes.font2}>
-                                        NUS Fintech Society NFT
+                                        {nft.collection}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <ViewNFTModal id={card} image='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg' />
+                                    <ViewNFTModal id={nft.id} image={nft.image} />
                                 </CardActions>
                             </Card>
                         </Grid>
