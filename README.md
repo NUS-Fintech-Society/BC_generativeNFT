@@ -9,6 +9,10 @@ Welcome to NUS Fintech Society Official NFT Page. This is a place made by NUS Fi
 ### Minting Page
 ![Minting Page](https://gateway.pinata.cloud/ipfs/QmNP55vADYebXNbVr4i88GahPhCFkwQuR8juQo727mJ2mY)
 
+### Profile Page
+![Profile Page](https://gateway.pinata.cloud/ipfs/QmVF5g9EDVtz1Rs6tMRvtTXevN8RdEbsKUoH3zBmftFMbi)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
