@@ -38,11 +38,12 @@ function Home() {
                     Hello
                 </Typography>
                 <Typography variant="h6" align="center" className={classes.description} paragraph>
-                    Welcome to NUS Fintech Society Official NFT Collection Page. This is where you can view all
-                    NUS Fintech Society NFT collections. These collections are exclusive to NUS Fintech Society members.
+                    Welcome to NUS Fintech Society Official NFT Page. This is a place made by NUS Fintech Society members for NUS Fintech Society.
+                    Here, you can view all NUS Fintech Society NFT collections.
                     There are limited number of NFTs to be minted, all are one-of-a-kind.
                 </Typography>
                 <Typography variant="h6" align="center" className={classes.description} paragraph>
+                    These collections are on the Ethereum blockchain in accordance to the ERC721 NFT standard.
                     A member can mint an NFT after initialisation into the society, after a big contribution to an ongoing project
                     or when he/she simply feels like it.
                 </Typography>
@@ -58,7 +59,10 @@ function Home() {
                     </Typography>
                     <Typography variant="h6" align="left" className={classes.description} paragraph>
                         The original team of developers has created the first collection of
-                        NUS Fintech Society NFTs. With only 300 unique and interactive NFTs for this collection, go mint yourself one today!
+                        NUS Fintech Society NFTs. This is a collection of 300 NFTs which are not only unique, but interactive as well.
+                        This collections explores the beauty of the Sonobe module used to build modular origami. 
+                        The combination of simple shapes to form a more complex but intriguing pattern.
+                        Go mint yourself a one-off ERC721 NFT today!
                     </Typography>
                 </Box>
                 
