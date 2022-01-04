@@ -107,11 +107,14 @@ function Mint() {
     const classes = useStyles();
     const [walletAddress, setWallet] = useState("");
 
-    useEffect(async () => {
-        const connectedWalletAddress = await getCurrentWalletConnected();
-        setWallet(connectedWalletAddress);
+    useEffect(() => {
+        async function load() {
+            const connectedWalletAddress = await getCurrentWalletConnected();
+            setWallet(connectedWalletAddress);
+            addWalletListener()
+        }
 
-        addWalletListener()
+        load();
     }, []);
 
     const connectWalletPressed = async () => {
@@ -189,8 +192,8 @@ function Mint() {
                                         {walletAddress.length > 0 && //Only able to Mint when Connected to address
                                             <MintNFTModal
                                                 imageLink={collection.image}
-                                                title={collection.name} 
-                                                accessCode={collection.accessCode}/>
+                                                title={collection.name}
+                                                accessCode={collection.accessCode} />
                                         }
                                     </CardActions>
                                 </Box>

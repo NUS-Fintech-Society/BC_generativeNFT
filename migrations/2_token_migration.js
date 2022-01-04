@@ -3,6 +3,6 @@ const Token = artifacts.require("Token");
 module.exports = function (deployer) {
   deployer.deploy(
     Token,
-    "ipfs://QmZbWNKJPAjxXuNFSEaksCJVd1M6DaKQViJBYPK2BdpDEP/"
+    "ipfs://bafybeid3uax2233msfrrdwncvwfswt2mathnzviohll4nbnrutws47yrmq/"
   );
 };
