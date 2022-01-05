@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import { Link } from "react-router-dom";
 
-const pages = ['gallery', 'mint', 'profile'];
+const pages = ['gallery', 'mint', 'profile', 'help'];
 const useStyles = makeStyles({
   darkBackground: {
     backgroundColor: '#2C2C2C'
