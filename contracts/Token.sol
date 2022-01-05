@@ -17,6 +17,8 @@ contract Token is ERC721Enumerable, ERC721Pausable, Ownable {
 
     string public baseTokenURI;
 
+    event Quote(address indexed creator, uint256 indexed tokenId, string quote);
+
     /// @param baseURI IPFS URL holding JSON Metadata for NFT
     constructor(string memory baseURI) ERC721("NUSToken", "NUS") {
         setBaseURI(baseURI);
@@ -50,7 +52,10 @@ contract Token is ERC721Enumerable, ERC721Pausable, Ownable {
     }
 
     /// @dev Front facing function to mint Tokens
-    function mintTokens(uint256 _noOfTokens) public payable {
+    function mintTokens(uint256 _noOfTokens, string memory _quote)
+        public
+        payable
+    {
         uint256 totalMinted = _tokenIds.current();
 
         require(
@@ -64,14 +69,15 @@ contract Token is ERC721Enumerable, ERC721Pausable, Ownable {
         );
 
         for (uint256 i = 0; i < _noOfTokens; i++) {
-            _mintOneToken();
+            _mintOneToken(_quote);
         }
     }
 
-    function _mintOneToken() private returns (uint256) {
+    function _mintOneToken(string memory _quote) private returns (uint256) {
         uint256 newTokenId = _tokenIds.current();
 
         _safeMint(msg.sender, newTokenId);
+        emit Quote(msg.sender, newTokenId, _quote);
         _tokenIds.increment();
         return newTokenId;
     }
