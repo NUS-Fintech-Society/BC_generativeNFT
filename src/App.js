@@ -4,6 +4,7 @@ import Home from './Pages/Home';
 import Gallery from './Pages/Gallery';
 import Mint from './Pages/Mint';
 import Profile from './Pages/Profile';
+import Help from './Pages/Help';
 import Footer from './Footer/Footer';
 import { CssBaseline, Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,6 +32,7 @@ function App() {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/mint" element={<Mint />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/help" element={<Help />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </Container>
