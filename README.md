@@ -62,3 +62,27 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
+### Deploying to TestNet - Ropsten OR Rinkeby
+
+1. Make sure the MNEMONIC environment variable is filled out and your wallet has test ether in either test nets using an ether faucet.
+
+2. Register at [infura.io](https://infura.io/) and create a new project
+
+3. Add your project id into the .env as shown below  
+   (Make sure it corresponds to whatever testnet you are intending to deploy the smart contract to)
+
+    ```.env
+    INFURA_PROJECT_ID= {your project id from infura}
+    ```
+
+4. To deploy to Rinkeby/Ropsten network
+
+    ```bash
+    truffle migrate --network rinkeby
+    ```
+
+    or
+
+    ```bash
+    truffle migrate --network ropsten
+    ```
