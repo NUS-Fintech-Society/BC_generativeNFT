@@ -40,7 +40,7 @@ Use `git clone https://github.com/NUS-Fintech-Society/BC_generativeNFT.git` to g
 
     - If you're successful, you should be able to see the contract address for the Token smart contract under 2_token_migration.js.  
 
-3. Replace the `contractAddress` variable in config.js in `src/util/` with the contract address.
+3. Replace the `contractAddress` variable (local) in config.js in `src/util/` with the contract address.
 
 ### Adding A Local Account To MetaMask
 
@@ -80,3 +80,5 @@ You may also see any lint errors in the console.
     ```bash
     truffle migrate --network rinkeby
     ```
+
+5. Replace the `contractAddress` variable (Rinkeby) in config.js in `src/util/` with the contract address from deployment.
