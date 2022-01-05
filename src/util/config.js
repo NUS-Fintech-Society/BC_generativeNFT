@@ -1,10 +1,13 @@
 // This file is to store the deployed contract address and abi from build/contracts/Token.json
 
 // Do not change this ropsten contract address
-// export const contractAddress = "0x980Ea11AB7429Bf11A93e7E6e3BD7bce2FC7422a"; // ropsten testnet address
+// export const contractAddress = "0x980Ea11AB7429Bf11A93e7E6e3BD7bce2FC7422a";
+
+// Do not change this rinkeby contract address
+export const contractAddress = "0x9860f84742827B2BA8A30b894Db6054CF2218a4c";
 
 // Replace this variable with your own local ganache contract address
-export const contractAddress = "0x15bc3108658C372B0027418d0c3796571117BB85";
+// export const contractAddress = "0x15bc3108658C372B0027418d0c3796571117BB85";
 
 export const contractAbi = [
   {
