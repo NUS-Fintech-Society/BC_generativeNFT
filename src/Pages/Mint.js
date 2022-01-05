@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Typography, Box, Grid, Card, CardMedia, CardContent, Container, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import MintNFTModal from '../Modals/MintNFTModal';
-import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
+import { connectWallet, getCurrentWalletConnected, checkNetwork } from "../util/interact.js";
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
 import firstCollectionBanner from '../assets/images/first_collection_banner.png'
@@ -109,6 +109,7 @@ function Mint() {
 
     useEffect(() => {
         async function load() {
+            checkNetwork()
             const connectedWalletAddress = await getCurrentWalletConnected();
             setWallet(connectedWalletAddress);
             addWalletListener()

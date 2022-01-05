@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import { contractAddress, contractAbi } from '../util/config';
+import { contractAddress, contractAbi } from './config';
 
 export const initialiseContract = async() => {
     if (window.ethereum) {
@@ -19,7 +19,7 @@ export const mintTokens = async(noOfTokens, quote) =>  { // send function
         let tokenTxn = await tokenContract.mintTokens(noOfTokens, quote, { value: ethers.utils.parseEther(`${noOfTokens * 0.01}`) });
         console.log("Loading...") // Update UI to let user know transaction mining
         await tokenTxn.wait();
-        console.log(`See transaction at https://ropsten.etherscan.io/tx/${tokenTxn.hash}`) // Update UI to let user know transaction successful
+        console.log(`See transaction at https://rinkeby.etherscan.io/tx/${tokenTxn.hash}`) // Update UI to let user know transaction successful
     } catch (err) {
         console.log(err);
     }
