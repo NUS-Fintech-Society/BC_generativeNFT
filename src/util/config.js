@@ -1,10 +1,10 @@
 // This file is to store the deployed contract address and abi from build/contracts/Token.json
 
 // Do not change this ropsten contract address
-export const contractAddress = "0x980Ea11AB7429Bf11A93e7E6e3BD7bce2FC7422a"; // ropsten testnet address
+// export const contractAddress = "0x980Ea11AB7429Bf11A93e7E6e3BD7bce2FC7422a"; // ropsten testnet address
 
 // Replace this variable with your own local ganache contract address
-// export const contractAddress = "0x221F88Ec5BBb9aF03547a353CE5577Cf8516b192";
+export const contractAddress = "0x15bc3108658C372B0027418d0c3796571117BB85";
 
 export const contractAbi = [
   {
@@ -98,6 +98,31 @@ export const contractAbi = [
       }
     ],
     "name": "Paused",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "string",
+        "name": "quote",
+        "type": "string"
+      }
+    ],
+    "name": "Quote",
     "type": "event"
   },
   {
@@ -571,6 +596,11 @@ export const contractAbi = [
         "internalType": "uint256",
         "name": "_noOfTokens",
         "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "_quote",
+        "type": "string"
       }
     ],
     "name": "mintTokens",

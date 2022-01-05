@@ -12,11 +12,11 @@ export const initialiseContract = async() => {
     }
 }
 
-export const mintTokens = async(noOfTokens) =>  { // send function
+export const mintTokens = async(noOfTokens, quote) =>  { // send function
     const tokenContract = await initialiseContract();
     try {
         console.log("Initialize payment") // update UI to let user know that transaction going to take awhile
-        let tokenTxn = await tokenContract.mintTokens(noOfTokens, { value: ethers.utils.parseEther(`${noOfTokens * 0.01}`) });
+        let tokenTxn = await tokenContract.mintTokens(noOfTokens, quote, { value: ethers.utils.parseEther(`${noOfTokens * 0.01}`) });
         console.log("Loading...") // Update UI to let user know transaction mining
         await tokenTxn.wait();
         console.log(`See transaction at https://ropsten.etherscan.io/tx/${tokenTxn.hash}`) // Update UI to let user know transaction successful
@@ -63,6 +63,18 @@ export const getPrice = async() => {
     try {
         const price = await tokenContract.PRICE();
         return price;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export const getQuote = async(tokenId) => {
+    const tokenContract = await initialiseContract();
+    try {
+        // creating filter
+        const filter = tokenContract.filters.Quote(null, tokenId);
+        const logs = await tokenContract.queryFilter(filter, 0, "latest");
+        return logs[0].args.quote;
     } catch (err) {
         console.log(err);
     }
