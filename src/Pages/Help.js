@@ -7,7 +7,7 @@ import faucet_help from '../assets/images/faucet_help.png'
 
 const useStyles = makeStyles({
     heading: {
-        fontFamily: `"Oswald", sans-serif`
+        fontFamily: `"Oswald", sans-serif`,
     },
     description: {
         fontFamily: `"Nunito", sans-serif`
@@ -30,7 +30,7 @@ function Help() {
             </Container>
 
             <Container maxWidth="md" className={classes.helloBlock}>
-                <Typography variant="h6" align="left" className={classes.heading} paragraph>
+                <Typography variant="h4" align="left" className={classes.heading} paragraph>
                     How do I start minting?
                 </Typography>
                 <Typography variant="h6" align="justify" className={classes.description} paragraph>

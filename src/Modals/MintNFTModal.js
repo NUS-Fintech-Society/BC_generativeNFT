@@ -78,10 +78,16 @@ const useStyles = makeStyles({
         fontFamily: `"Nunito", sans-serif`,
         fontSize: '10px',
         position: 'absolute',
-        top: '-87px'
+        top: '-155px'
     },
     accessCodeNoticeBlock: {
         position: 'relative'
+    },
+    quoteNotice: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontSize: '10px',
+        position: 'absolute',
+        top: '-86px'
     }
 
 });
@@ -96,6 +102,7 @@ function MintNFTModal(props) {
 
     const [accessCode, setAccessCode] = React.useState("");
     const [quantity, setQuantity] = React.useState(0);
+    const [quote, setQuote] = React.useState("");
 
     const [numOfTokensRemaining, setNumOfTokensRemaining] = React.useState(0);
 
@@ -116,6 +123,9 @@ function MintNFTModal(props) {
         setAccessCode(event.target.value);
 
     };
+    const handleQuote = (event) => {
+        setQuote(event.target.value);
+    };
 
     const handleQuantity = (event) => {
         if (event.target.value < 0) {
@@ -130,13 +140,11 @@ function MintNFTModal(props) {
         event.preventDefault();
         if (accessCode === correctAccessCode && quantity > 0 && (numOfTokensRemaining - quantity) > 0) {
             setIsLoading(true);
-            mintTokens(quantity).then(() => {
+            mintTokens(quantity, quote).then(() => {
                 setIsMinted(true);
                 setIsLoading(false);
                 setNumOfTokensRemaining(numOfTokensRemaining - quantity);
             });
-
-            console.log("Successful Mint");
         }
 
     };
@@ -180,6 +188,12 @@ function MintNFTModal(props) {
                                         onChange={handleAccessCode}
 
                                     />
+                                    <TextField
+                                        label="Quote"
+                                        variant="standard"
+                                        className={classes.mintInput}
+                                        onChange={handleQuote}
+                                    />
                                     <Box className={classes.mintingBlock}>
                                         <TextField
                                             required
@@ -193,7 +207,7 @@ function MintNFTModal(props) {
                                             onChange={handleQuantity}
                                         />
                                         <Box>
-                                            {(!isMinted && !isLoading) && (
+                                            {(!isLoading && !isMinted) && (
                                                 <Button className={classes.mintButton} onClick={handleMint}>
                                                     Mint Now
                                                 </Button>
@@ -225,6 +239,11 @@ function MintNFTModal(props) {
                                         </Typography>
                                     )
                                     }
+                                    {(quote.length > 0) && (
+                                        <Typography variant="h6" className={classes.quoteNotice}>
+                                            "{quote}"
+                                        </Typography>
+                                    )}
                                 </Box>
                             </Box>
 

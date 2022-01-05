@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { contractAddress, contractAbi } from './config';
 
-export const initialiseContract = async() => {
+export const initialiseContract = async () => {
     if (window.ethereum) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
@@ -12,21 +12,19 @@ export const initialiseContract = async() => {
     }
 }
 
-export const mintTokens = async(noOfTokens, quote) =>  { // send function
+export const mintTokens = async (noOfTokens, quote) => { // send function
     const tokenContract = await initialiseContract();
-    try {
-        console.log("Initialize payment") // update UI to let user know that transaction going to take awhile
-        let tokenTxn = await tokenContract.mintTokens(noOfTokens, quote, { value: ethers.utils.parseEther(`${noOfTokens * 0.01}`) });
-        console.log("Loading...") // Update UI to let user know transaction mining
-        await tokenTxn.wait();
-        console.log(`See transaction at https://rinkeby.etherscan.io/tx/${tokenTxn.hash}`) // Update UI to let user know transaction successful
-    } catch (err) {
-        console.log(err);
-    }
+
+    console.log("Initialize payment") // update UI to let user know that transaction going to take awhile
+    let tokenTxn = await tokenContract.mintTokens(noOfTokens, quote, { value: ethers.utils.parseEther(`${noOfTokens * 0.01}`) });
+    console.log("Loading...") // Update UI to let user know transaction mining
+    await tokenTxn.wait();
+    console.log(`See transaction at https://rinkeby.etherscan.io/tx/${tokenTxn.hash}`) // Update UI to let user know transaction successful
+
 }
 
 // Returns array of tokenIds owner owns
-export const tokensOfOwner = async(owner) => { 
+export const tokensOfOwner = async (owner) => {
     const tokenContract = await initialiseContract();
     try {
         const tokensArray = await tokenContract.tokensOfOwner(owner);
@@ -37,7 +35,7 @@ export const tokensOfOwner = async(owner) => {
 }
 
 //Returns all tokenIds that have been minted
-export const tokensOfAll = async() => {
+export const tokensOfAll = async () => {
     const tokenContract = await initialiseContract();
     try {
         const tokensArray = await tokenContract.tokensOfAll();
@@ -47,18 +45,18 @@ export const tokensOfAll = async() => {
     }
 }
 
-export const tokensRemaining = async() => {
+export const tokensRemaining = async () => {
     const tokenContract = await initialiseContract();
     try {
         const tokensMinted = await tokenContract.totalSupply();
         const maxSupply = await tokenContract.MAX_SUPPLY();
-        return maxSupply - tokensMinted; 
+        return maxSupply - tokensMinted;
     } catch (err) {
         console.log(err);
-    }   
+    }
 }
 
-export const getPrice = async() => {
+export const getPrice = async () => {
     const tokenContract = await initialiseContract();
     try {
         const price = await tokenContract.PRICE();
@@ -68,7 +66,7 @@ export const getPrice = async() => {
     }
 }
 
-export const getQuote = async(tokenId) => {
+export const getQuote = async (tokenId) => {
     const tokenContract = await initialiseContract();
     try {
         // creating filter
@@ -79,4 +77,3 @@ export const getQuote = async(tokenId) => {
         console.log(err);
     }
 }
-    
