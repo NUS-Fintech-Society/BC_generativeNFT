@@ -1,3 +1,5 @@
+import { ethers } from 'ethers';
+
 export const connectWallet = async () => {
     if (window.ethereum) {
         try {
@@ -38,3 +40,18 @@ export const getCurrentWalletConnected = async () => {
         return "";
     }
 };
+
+export const checkNetwork = async() => {
+    if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const { chainId } = await provider.getNetwork();
+        if (chainId !== 4) {
+            alert("Please change your network to the Rinkeby Test Network!");
+            return "";
+        }
+    } else {
+        alert('Sorry, it appears you do not have MetaMask. You must install Metamask, a virtual Ethereum wallet, in your browser.');
+        return "";
+    }
+}
+

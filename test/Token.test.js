@@ -1,6 +1,7 @@
 const { assert } = require("chai");
 const truffleAssert = require("truffle-assertions");
 const Token = artifacts.require("./Token.sol");
+const { ethers } = require("ethers");
 
 contract("Token", (accounts) => {
   // global instance of contract
@@ -37,8 +38,8 @@ contract("Token", (accounts) => {
   describe("minting", async () => {
     // Test Case 3: tokenURI and Transfer event should be correct
     it("creates a new token and transfer event emitted", async () => {
-      const result = await contract.mintTokens(1, {
-        value: web3.utils.toWei("0.01", "ether"),
+      const result = await contract.mintTokens(1, "sample quote", {
+        value: ethers.utils.parseEther("0.01").toString(),
       });
       const event = result.logs[0].args; // Transfer event when _safeMint is called
       let uri = await contract.tokenURI(event.tokenId);
@@ -55,42 +56,50 @@ contract("Token", (accounts) => {
       assert.equal(event.tokenId, 0, "tokenId is incorrect");
     });
 
+    it("quote event emitted", async() => {
+      const result = await contract.mintTokens(1, "I\'m not superstitious, but I am a little stitious.", {value: ethers.utils.parseEther("0.01").toString()});
+      const event = result.logs[1].args; // Quote event when _mintOneToken is called
+      assert.equal(event.creator, alice, "creator is incorrect");
+      assert.equal(event.tokenId, 1, "tokenId is incorrect");
+      assert.equal(event.quote, "I\'m not superstitious, but I am a little stitious.", "quote is incorrect");
+    })
+
     // Test Case 4: Failure when quantity exceeds
     it("should reject transaction if quantity minted exceeds max supply", async () => {
       await truffleAssert.reverts(
-        contract.mintTokens(MAX_SUPPLY, { value: web3.utils.toWei("2.50", "ether") })
+        contract.mintTokens(MAX_SUPPLY, "sample quote", { value: ethers.utils.parseEther("2.50").toString() })
       );
     });
 
     // Test Case 5: Failure when not enough ether supplied
     it("should reject transaction if not enough ether supplied", async () => {
       await truffleAssert.reverts(
-        contract.mintTokens(1, { value: web3.utils.toWei("0.005", "ether") })
+        contract.mintTokens(1, "sample quote", { value: ethers.utils.parseEther("0.005").toString() })
       );
     });
 
     // Test Case 6: Failure when attempt to mint 0 token
     it("should reject transaction if number of tokens minted is zero", async () => {
       await truffleAssert.reverts(
-        contract.mintTokens(0, { value: web3.utils.toWei("0.01", "ether") })
+        contract.mintTokens(0, "sample quote", { value: ethers.utils.parseEther("0.01").toString()})
       );
     });
   });
 
-  describe("querying tokens", async () => {
+  describe("querying data", async () => {
     // Test Case 7: Correct display of token for specific owner
     it("query of tokens for specific owner", async () => {
-      await contract.mintTokens(3, {
+      await contract.mintTokens(2, "sample quote", {
         from: alice,
-        value: web3.utils.toWei("0.03", "ether"),
+        value: ethers.utils.parseEther("0.02").toString(),
       });
-      await contract.mintTokens(3, {
+      await contract.mintTokens(3, "sample quote", {
         from: bob,
-        value: web3.utils.toWei("0.03", "ether"),
+        value: ethers.utils.parseEther("0.03").toString(),
       });
-      await contract.mintTokens(1, {
+      await contract.mintTokens(1, "sample quote", {
         from: alice,
-        value: web3.utils.toWei("0.03", "ether"),
+        value: ethers.utils.parseEther("0.01").toString(),
       });
       let result = await contract.tokensOfOwner(accounts[0]);
       let expected = ["0", "1", "2", "3", "7"];
@@ -130,7 +139,7 @@ contract("Token", (accounts) => {
     it("should reject transaction after contract has been paused", async () => {
       await contract.pause({ from: alice });
       await truffleAssert.reverts(
-        contract.mintTokens(1, { value: web3.utils.toWei("0.01", "ether") })
+        contract.mintTokens(1, "sample quote", { value: web3.utils.toWei("0.01", "ether") })
       );
     });
   });
