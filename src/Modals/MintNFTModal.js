@@ -1,7 +1,7 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Backdrop, Box, Modal, Fade, Button, Typography, TextField, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { initialiseContract, mintTokens } from '../util/contract';
+import { initialiseContract, mintTokens, tokensRemaining } from '../util/contract';
 
 const useStyles = makeStyles({
     modal: {
@@ -78,16 +78,10 @@ const useStyles = makeStyles({
         fontFamily: `"Nunito", sans-serif`,
         fontSize: '10px',
         position: 'absolute',
-        top: '-155px'
+        top: '-87px'
     },
     accessCodeNoticeBlock: {
         position: 'relative'
-    },
-    quoteNotice: {
-        fontFamily: `"Nunito", sans-serif`,
-        fontSize: '10px',
-        position: 'absolute',
-        top: '-86px'
     }
 
 });
@@ -103,14 +97,19 @@ function MintNFTModal(props) {
     const [accessCode, setAccessCode] = React.useState("");
     const [quantity, setQuantity] = React.useState(0);
 
+    const [numOfTokensRemaining, setNumOfTokensRemaining] = React.useState(0);
+
     const [isMinted, setIsMinted] = React.useState(false);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     useEffect(() => {
         async function load() {
             initialiseContract();
+
         }
 
         load();
+        tokensRemaining().then((result) => { setNumOfTokensRemaining(result) });
     }, []);
 
     const handleAccessCode = (event) => {
@@ -129,12 +128,17 @@ function MintNFTModal(props) {
 
     const handleMint = (event) => {
         event.preventDefault();
-        if (accessCode === correctAccessCode && quantity > 0) {
-            mintTokens(quantity);
-            setIsMinted(true);
+        if (accessCode === correctAccessCode && quantity > 0 && (numOfTokensRemaining - quantity) > 0) {
+            setIsLoading(true);
+            mintTokens(quantity).then(() => {
+                setIsMinted(true);
+                setIsLoading(false);
+                setNumOfTokensRemaining(numOfTokensRemaining - quantity);
+            });
+
             console.log("Successful Mint");
-        } 
-        
+        }
+
     };
 
     return (
@@ -165,7 +169,7 @@ function MintNFTModal(props) {
                                     Minting {props.title}
                                 </Typography>
                                 <Typography id="transition-modal-description" sx={{ mt: 2 }} className={classes.collectionStats}>
-                                    No. of NFTs Remaining: 250
+                                    No. of NFTs Remaining: {numOfTokensRemaining}
                                 </Typography>
                                 <form>
                                     <TextField
@@ -189,11 +193,17 @@ function MintNFTModal(props) {
                                             onChange={handleQuantity}
                                         />
                                         <Box>
-                                            {(!isMinted) ? (
+                                            {(!isMinted && !isLoading) && (
                                                 <Button className={classes.mintButton} onClick={handleMint}>
                                                     Mint Now
                                                 </Button>
-                                            ) : (
+                                            )}
+                                            { (isLoading && !isMinted) && (
+                                                <Button className={classes.mintButton} >
+                                                    Loading
+                                                </Button>
+                                            )}
+                                            { (!isLoading && isMinted) && (
                                                 <Button className={classes.mintButton} >
                                                     Minted
                                                 </Button>
