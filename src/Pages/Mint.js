@@ -12,18 +12,7 @@ const nftCollection1 = {
     description: 'The first collection of NFTs for NUS Fintech Society',
     image: firstCollectionBanner,
     accessCode: 'NUSFintechSociety'
-    //image: 'https://gateway.pinata.cloud/ipfs/QmTf7qyZXxSwEs8eosRZt57AdxY1oKASDdqkt6ZMZFkptK'
 }
-// const nftCollection2 = {
-//     name: 'The Second Collection',
-//     description: 'The second collection of NFTs for NUS Fintech Society',
-//     image: 'https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'
-// }
-// const nftCollection3 = {
-//     name: 'The Third Collection',
-//     description: 'The third collection of NFTs for NUS Fintech Society',
-//     image: 'https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'
-// }
 
 const collections = [nftCollection1];
 
@@ -201,8 +190,7 @@ function Mint() {
 
                             </Card>
                         </Grid>
-                    ))};
-
+                    ))}
                 </Grid>
             </Container>
         </>

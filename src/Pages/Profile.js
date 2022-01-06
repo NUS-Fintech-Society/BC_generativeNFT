@@ -6,28 +6,6 @@ import ViewNFTModal from '../Modals/ViewNFTModal';
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
 import { tokensOfOwner, getQuote } from "../util/contract.js";
 
-const nft1 = {
-    id: '0',
-    image: 'https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg',
-    collection: 'The First Collection',
-    quote: 'Hello World'
-}
-
-const nft2 = {
-    id: '1',
-    image: 'https://gateway.pinata.cloud/ipfs/QmSurs4xyqRLiuquse8utEUW82VxtSEs29r9MsedhydEfQ',
-    collection: 'The First Collection',
-    quote: 'Hello World'
-}
-
-const nft3 = {
-    id: '2',
-    image: 'https://gateway.pinata.cloud/ipfs/QmU65ogFtVPoKmPWNtthymY22xPSGxAMj2PzFv8D9D2Dy6',
-    collection: 'The First Collection',
-    quote: 'Hello World'
-}
-const nfts = [nft1, nft2, nft3]; //Should be an array of NFTs with its metadata and image link
-
 const useStyles = makeStyles({
     addressBlock: {
         display: 'flex',
@@ -35,13 +13,11 @@ const useStyles = makeStyles({
         alignItems: 'center',
         width: '200px',
         height: '200px'
-
     },
     addressLine: {
         fontFamily: `"Nunito", sans-serif`,
         fontWeight: '600',
         display: 'inline-block'
-
     },
     connectButton: {
         backgroundColor: '#2C2C2C',
@@ -76,7 +52,6 @@ const useStyles = makeStyles({
     },
     cardContent: {
         flexGrow: 1,
-
     },
     font2: {
         fontFamily: `"Nunito", sans-serif`
@@ -140,22 +115,16 @@ function Profile() {
                             setNfts(updatedNFTArray);
                         }
                     });
-
                 }
-
-
             });
-
 
         }
 
         load();
-
     }, []);
 
     const connectWalletPressed = async () => {
         const walletAddress = await connectWallet();
-
         setWallet(walletAddress);
     };
 
@@ -164,10 +133,8 @@ function Profile() {
             window.ethereum.on("accountsChanged", (accounts) => {
                 if (accounts.length > 0) {
                     setWallet(accounts[0]);
-
                 } else {
                     setWallet("");
-
                 }
             });
         } else {

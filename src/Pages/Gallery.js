@@ -24,15 +24,16 @@ const useStyles = makeStyles({
     },
     cardContent: {
         flexGrow: 1,
-
     },
     font2: {
         fontFamily: `"Nunito", sans-serif`
+    },
+    loading: {
+        fontFamily: `"Nunito", sans-serif`,
+        margin: '0 auto'
     }
 
 });
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]; //Should be an array of NFTs with its metadata and image link
 
 function Gallery() {
 
@@ -71,7 +72,6 @@ function Gallery() {
                 }
             });
         }
-
 
         load();
     }, []);
@@ -116,11 +116,9 @@ function Gallery() {
                             </Card>
                         </Grid>
                     ))};
-
                 </Grid>
             </Container>
         </>
-
     )
 }
 
