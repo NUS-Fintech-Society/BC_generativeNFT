@@ -182,6 +182,7 @@ function MintNFTModal(props) {
                                 <form>
                                     <TextField
                                         required
+                                        disabled={isMinted}
                                         label="Access Code"
                                         variant="standard"
                                         className={classes.mintInput}
@@ -189,6 +190,7 @@ function MintNFTModal(props) {
 
                                     />
                                     <TextField
+                                        disabled={isMinted}
                                         label="Quote"
                                         variant="standard"
                                         className={classes.mintInput}
@@ -197,6 +199,7 @@ function MintNFTModal(props) {
                                     <Box className={classes.mintingBlock}>
                                         <TextField
                                             required
+                                            disabled={isMinted}
                                             id="outlined-number"
                                             label="Number"
                                             type="number"

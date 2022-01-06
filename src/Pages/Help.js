@@ -35,7 +35,7 @@ function Help() {
                 </Typography>
                 <Typography variant="h6" align="justify" className={classes.description} paragraph>
                     We will need Ether to start minting. The Ether faucet is running on the Rinkeby test network.
-                    In this demonstration, we will be using Chainlink's faucet.
+                    In this demonstration, we will be using Chainlink's <a href='https://faucets.chain.link/rinkeby' target='_blank'>faucet</a>.
                 </Typography>
                 <Typography variant="h6" align="justify" className={classes.description} paragraph>
                     Under Network, select Ethereum Rinkeby. Next, enter your testnet account address from Metamask and
