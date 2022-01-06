@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
 import ViewNFTModal from '../Modals/ViewNFTModal';
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
+import { tokensOfOwner, getQuote } from "../util/contract.js";
 
 const nft1 = {
     id: '0',
@@ -91,6 +92,10 @@ const useStyles = makeStyles({
     profileDesc: {
         width: '400px',
         fontFamily: `"Nunito", sans-serif`
+    },
+    loading: {
+        fontFamily: `"Nunito", sans-serif`,
+        margin: '0 auto'
     }
 
 })
@@ -100,15 +105,52 @@ const useStyles = makeStyles({
 function Profile() {
     const classes = useStyles();
     const [walletAddress, setWallet] = useState("");
+    const [nfts, setNfts] = useState([]);
 
     useEffect(() => {
         async function load() {
             const connectedWalletAddress = await getCurrentWalletConnected();
             setWallet(connectedWalletAddress);
             addWalletListener();
+
+            tokensOfOwner(connectedWalletAddress).then((ownerNFTs) => {
+                const ownedNFTs = [];
+                for (let i = 0; i < ownerNFTs.length; i++) {
+                    let tokenId = ownerNFTs[i].toString();
+
+                    //Retrieve Quote
+                    getQuote(parseInt(tokenId)).then((quote) => {
+                        let nft = {
+                            id: tokenId,
+                            image: '/images/nft_collections/first_collection/' + tokenId + '.png',
+                            collection: 'The First Collection',
+                            quote: quote
+                        }
+
+                        if (!ownedNFTs.some(nft => nft.id === tokenId)) {
+                            //Updates original array with newly retrieved NFT
+                            ownedNFTs.push(nft);
+
+                            //Creates a new array with the NFTs
+                            const updatedNFTArray = [];
+                            updatedNFTArray.push(...ownedNFTs);
+                            updatedNFTArray.sort(function (nft1, nft2) { return nft1.id - nft2.id });
+
+                            //Updates the nfts array to rerender
+                            setNfts(updatedNFTArray);
+                        }
+                    });
+
+                }
+
+
+            });
+
+
         }
 
         load();
+
     }, []);
 
     const connectWalletPressed = async () => {
@@ -167,6 +209,13 @@ function Profile() {
 
             <Container className={classes.cardGrid} maxWidth="md">
                 <Grid container spacing={4}>
+                    {nfts.length == 0 && (
+                        <>
+                            <Typography variant="h4" align="center" className={classes.loading} >
+                                Loading...
+                            </Typography>
+                        </>
+                    )}
                     {nfts.map((nft) => (
                         <Grid item key={nft.id} xs={12} sm={6} md={4}>
                             <Card className={classes.card}>
@@ -182,7 +231,7 @@ function Profile() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <ViewNFTModal id={nft.id} image={nft.image} />
+                                    <ViewNFTModal id={nft.id} image={nft.image} quote={nft.quote} collection={nft.collection} />
                                 </CardActions>
                             </Card>
                         </Grid>

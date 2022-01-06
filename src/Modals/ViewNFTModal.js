@@ -73,7 +73,7 @@ function ViewNFTModal(props) {
                                 {props.id}
                             </Typography>
                             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                Meta Data
+                                {props.quote} 
                             </Typography>
                         </Box>
 
