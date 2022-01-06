@@ -6,6 +6,7 @@ import Fade from '@material-ui/core/Fade';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import Nft from '../util/nft';
 
 const useStyles = makeStyles({
     modal: {
@@ -15,18 +16,18 @@ const useStyles = makeStyles({
         transform: 'translate(-50%, -50%)',
         backgroundColor: 'white',
         borderRadius: '5px',
-        padding: '30px',
+        padding: '60px 30px',
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         width: '75%',
-        maxWidth: '900px'
+        maxWidth: '900px',
     },
     mediaContainer: {
         minWidth: '300px',
         minHeight: '300px',
         borderRadius: '5px',
-        
+
     },
     image: {
         width: '100%',
@@ -35,7 +36,12 @@ const useStyles = makeStyles({
     descContainer: {
         padding: '20px',
         maxWidth: '300px',
-        margin: 'auto 0'
+        margin: 'auto 0',
+
+    },
+    description: {
+        fontFamily: `"Nunito", sans-serif`,
+        marginBottom: '20px'
     }
 
 });
@@ -63,17 +69,17 @@ function ViewNFTModal(props) {
                 <Fade in={open}>
                     <Box className={classes.modal}>
                         <Box className={classes.mediaContainer}>
-                            <img
-                                src={props.image}
-                                alt={props.id + " Image"}
-                                className={classes.image} />
+                            <Nft tokenId={props.id} />
                         </Box>
                         <Box className={classes.descContainer}>
-                            <Typography id="transition-modal-title" variant="h6">
-                                {props.id}
+                            <Typography variant="h4" className={classes.description}>
+                                #{props.id}
                             </Typography>
-                            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-                                {props.quote} 
+                            <Typography variant="h5" className={classes.description}>
+                                {props.collection}
+                            </Typography>
+                            <Typography variant="h5" className={classes.description}>
+                                "{props.quote}"
                             </Typography>
                         </Box>
 

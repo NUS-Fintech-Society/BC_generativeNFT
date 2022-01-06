@@ -1,7 +1,8 @@
 import { Grid, Card, CardMedia, CardContent, Container, Typography, CardActions, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ViewNFTModal from '../Modals/ViewNFTModal';
+import { tokensOfAll, getQuote } from "../util/contract.js";
 
 const useStyles = makeStyles({
     heading: {
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
     },
     cardContent: {
         flexGrow: 1,
-        
+
     },
     font2: {
         fontFamily: `"Nunito", sans-serif`
@@ -36,6 +37,45 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]; //Should be an array of NFTs with its
 function Gallery() {
 
     const classes = useStyles();
+    const [nfts, setNfts] = useState([]);
+
+    useEffect(() => {
+        async function load() {
+            tokensOfAll().then((nFTs) => {
+                const ownedNFTs = [];
+                for (let i = 0; i < nFTs.length; i++) {
+                    let tokenId = nFTs[i].toString();
+
+                    //Retrieve Quote
+                    getQuote(parseInt(tokenId)).then((quote) => {
+                        let nft = {
+                            id: tokenId,
+                            image: '/images/nft_collections/first_collection/' + tokenId + '.png',
+                            collection: 'The First Collection',
+                            quote: quote
+                        }
+
+                        if (!ownedNFTs.some(nft => nft.id === tokenId)) {
+                            //Updates original array with newly retrieved NFT
+                            ownedNFTs.push(nft);
+
+                            //Creates a new array with the NFTs
+                            const updatedNFTArray = [];
+                            updatedNFTArray.push(...ownedNFTs);
+                            updatedNFTArray.sort(function (nft1, nft2) { return nft1.id - nft2.id });
+
+                            //Updates the nfts array to rerender
+                            setNfts(updatedNFTArray);
+                        }
+                    });
+                }
+            });
+        }
+
+
+        load();
+    }, []);
+
     return (
         <>
             <Container maxWidth="sm">
@@ -49,25 +89,32 @@ function Gallery() {
             </Container>
             <Container className={classes.cardGrid} maxWidth="md">
                 <Grid container spacing={4}>
-                    {cards.map((card) => (
-                    <Grid item key={card} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
-                            <CardMedia className={classes.cardMedia}
-                                image="https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg" //hardcoded
-                                title="Image Title" />
-                            <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom variant='h5' className={classes.font2}>
-                                    #{card}
-                                </Typography>
-                                <Typography className={classes.font2}>
-                                    NUS Fintech Society NFT
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <ViewNFTModal id={card} image='https://gateway.pinata.cloud/ipfs/QmVw4Rts3aCPSfWVoLnco7SiTzw8Wfxj7KnW8qWe5PfcKg'/>
-                            </CardActions>
-                        </Card>
-                    </Grid>
+                    {nfts.length == 0 && (
+                        <>
+                            <Typography variant="h4" align="center" className={classes.loading} >
+                                Loading...
+                            </Typography>
+                        </>
+                    )}
+                    {nfts.map((nft) => (
+                        <Grid item key={nft.id} xs={12} sm={6} md={4}>
+                            <Card className={classes.card}>
+                                <CardMedia className={classes.cardMedia}
+                                    image={nft.image}
+                                    title={nft.collection + " #" + nft.id} />
+                                <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom variant='h5' className={classes.font2}>
+                                        #{nft.id}
+                                    </Typography>
+                                    <Typography className={classes.font2}>
+                                        {nft.collection}
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <ViewNFTModal id={nft.id} image={nft.image} quote={nft.quote} collection={nft.collection} />
+                                </CardActions>
+                            </Card>
+                        </Grid>
                     ))};
 
                 </Grid>

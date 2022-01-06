@@ -22,12 +22,12 @@
     "truffle-assertions": "^0.9.2",
     "truffle-hdwallet-provider": "^1.0.17",
     "web-vitals": "^2.1.2",
-	"react-three-fiber": "^5.3.11",
-	"mersenne-twister": "^1.1.0",
-	"@react-three/drei": "^2.2.15",
-	"three": "^0.124.0",
-	"use-asset": "^1.0.4",
-	"colorjs.io": "0.0.3"
+    "react-three-fiber": "^5.3.11",
+    "mersenne-twister": "^1.1.0",
+    "@react-three/drei": "^2.2.15",
+    "three": "^0.124.0",
+    "use-asset": "^1.0.4",
+    "colorjs.io": "0.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
