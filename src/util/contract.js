@@ -77,3 +77,13 @@ export const getQuote = async (tokenId) => {
         console.log(err);
     }
 }
+
+export const ownerOf = async (tokenId) => {
+    const tokenContract = await initialiseContract();
+    try {
+        const owner = await tokenContract.ownerOf(tokenId);
+        return owner;
+    } catch (err) {
+        console.log(err);
+    }
+}
