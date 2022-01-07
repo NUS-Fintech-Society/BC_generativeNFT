@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Backdrop, Box, Modal, Fade, Button, Typography, TextField, FormControl } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { initialiseContract, mintTokens, tokensRemaining } from '../util/contract';
+import { mintTokens, tokensRemaining } from '../util/contract';
 
 const useStyles = makeStyles({
     modal: {
@@ -110,12 +110,6 @@ function MintNFTModal(props) {
     const [isLoading, setIsLoading] = React.useState(false);
 
     useEffect(() => {
-        async function load() {
-            initialiseContract();
-
-        }
-
-        load();
         tokensRemaining().then((result) => { setNumOfTokensRemaining(result) });
     }, []);
 
@@ -140,11 +134,16 @@ function MintNFTModal(props) {
         event.preventDefault();
         if (accessCode === correctAccessCode && quantity > 0 && (numOfTokensRemaining - quantity) > 0) {
             setIsLoading(true);
-            mintTokens(quantity, quote).then(() => {
-                setIsMinted(true);
-                setIsLoading(false);
-                setNumOfTokensRemaining(numOfTokensRemaining - quantity);
-            });
+            mintTokens(quantity, quote)
+                .then(() => {
+                    setIsMinted(true);
+                    setIsLoading(false);
+                    setNumOfTokensRemaining(numOfTokensRemaining - quantity);
+                })
+                .catch(() => {
+                    setIsLoading(false);
+                    alert("Something went wrong. Please try again!")
+                });
         }
 
     };

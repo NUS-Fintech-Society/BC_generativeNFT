@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import React, { useState, useEffect } from 'react';
 import ViewNFTModal from '../Modals/ViewNFTModal';
 import { tokensOfAll, getQuote } from "../util/contract.js";
+import { checkNetwork } from "../util/interact.js";
 
 const useStyles = makeStyles({
     heading: {
@@ -42,6 +43,7 @@ function Gallery() {
 
     useEffect(() => {
         async function load() {
+            checkNetwork();
             tokensOfAll().then((nFTs) => {
                 const ownedNFTs = [];
                 for (let i = 0; i < nFTs.length; i++) {

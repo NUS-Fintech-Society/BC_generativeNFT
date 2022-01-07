@@ -46,7 +46,7 @@ export const checkNetwork = async() => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const { chainId } = await provider.getNetwork();
         if (chainId !== 4) {
-            alert("Please change your network to the Rinkeby Test Network!");
+            alert("For the site to work as intended, please change your network to the Rinkeby Test Network!");
             return "";
         }
     } else {
