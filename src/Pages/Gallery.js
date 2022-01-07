@@ -48,7 +48,6 @@ function Gallery() {
 
                 //Retrieve Quote
                 getQuote(parseInt(tokenId)).then((quote) => {
-
                     ownerOf(parseInt(tokenId)).then((address) => {
                         let nft = {
                             id: tokenId,

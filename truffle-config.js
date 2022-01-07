@@ -23,6 +23,7 @@ const HDWalletProvider = require("truffle-hdwallet-provider");
 require("dotenv").config();
 const mnemonic = process.env.MNEMONIC;
 const projectId = process.env.INFURA_PROJECT_ID;
+const apiKey = process.env.ETHERSCAN_API_KEY;
 
 module.exports = {
   /**
@@ -129,4 +130,10 @@ module.exports = {
   //   }
   // }
   // }
+  api_keys: {
+    etherscan: `${apiKey}`
+  },
+  plugins: [
+    'truffle-plugin-verify'
+  ]
 };

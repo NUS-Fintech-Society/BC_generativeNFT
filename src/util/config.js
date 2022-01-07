@@ -1,7 +1,7 @@
 // This file is to store the deployed contract address and abi from build/contracts/Token.json
 
 // Do not change this rinkeby contract address unless redeployed
-export const contractAddress = "0x9860f84742827B2BA8A30b894Db6054CF2218a4c";
+export const contractAddress = "0x4B2dbF0E15C9E7FD6D1937608eCfc208A93D6db3";
 
 // Replace this variable with your own local ganache contract address
 // export const contractAddress = "0x15bc3108658C372B0027418d0c3796571117BB85";

@@ -20,7 +20,9 @@ contract Token is ERC721Enumerable, ERC721Pausable, Ownable {
     event Quote(address indexed creator, uint256 indexed tokenId, string quote);
 
     /// @param baseURI IPFS URL holding JSON Metadata for NFT
-    constructor(string memory baseURI) ERC721("NUSToken", "NUS") {
+    constructor(string memory baseURI)
+        ERC721("Sonobe: Orbs and Jewels", "ORB")
+    {
         setBaseURI(baseURI);
     }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Typography, Box, Grid, Card, CardMedia, CardContent, Container, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
+import { connectWallet, getCurrentWalletConnected, checkNetwork } from "../util/interact.js";
 import ViewNFTModal from '../Modals/ViewNFTModal';
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
 import { tokensOfOwner, getQuote } from "../util/contract.js";
@@ -117,6 +117,7 @@ function Profile() {
 
     useEffect(() => {
         async function load() {
+            checkNetwork();
             const connectedWalletAddress = await getCurrentWalletConnected();
             setWallet(connectedWalletAddress);
             addWalletListener();

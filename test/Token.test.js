@@ -7,7 +7,7 @@ contract("Token", (accounts) => {
   // global instance of contract
   let contract;
   // stand-in baseURI
-  let baseURI = "ipfs://bafybeid3uax2233msfrrdwncvwfswt2mathnzviohll4nbnrutws47yrmq/";
+  let baseURI = "ipfs://bafybeidxwe3gk4bnvwxvfvdkye4gugm2v6sqna47sehaapbjyjc4557k74/";
   let [alice, bob] = accounts;
   let MAX_SUPPLY = 250
 
@@ -26,12 +26,12 @@ contract("Token", (accounts) => {
       assert.notEqual(address, undefined);
     });
 
-    // Test Case 2 : Should return correct name and symbol NUSToken, NUS
+    // Test Case 2 : Should return correct name and symbol 
     it("has a name and symbol", async () => {
       const name = await contract.name();
       const symbol = await contract.symbol();
-      assert.equal(name, "NUSToken");
-      assert.equal(symbol, "NUS");
+      assert.equal(name, "Sonobe: Orbs and Jewels");
+      assert.equal(symbol, "ORB");
     });
   });
 
@@ -45,7 +45,7 @@ contract("Token", (accounts) => {
       let uri = await contract.tokenURI(event.tokenId);
       assert.equal(
         uri,
-        "ipfs://bafybeid3uax2233msfrrdwncvwfswt2mathnzviohll4nbnrutws47yrmq/0"
+        `${baseURI}0`
       );
       assert.equal(
         event.from,

@@ -1,11 +1,21 @@
 import { ethers } from 'ethers';
 import { contractAddress, contractAbi } from './config';
 
-export const initialiseContract = async () => {
+const initialiseContract = async () => {
     if (window.ethereum) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
         return new ethers.Contract(contractAddress, contractAbi, signer);
+    } else {
+        alert('Sorry, it appears you do not have MetaMask. You must install Metamask, a virtual Ethereum wallet, in your browser.');
+        return "";
+    }
+}
+
+const readOnlyContract = async() => {
+    if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        return new ethers.Contract(contractAddress, contractAbi, provider);
     } else {
         alert('Sorry, it appears you do not have MetaMask. You must install Metamask, a virtual Ethereum wallet, in your browser.');
         return "";
@@ -25,7 +35,7 @@ export const mintTokens = async (noOfTokens, quote) => { // send function
 
 // Returns array of tokenIds owner owns
 export const tokensOfOwner = async (owner) => {
-    const tokenContract = await initialiseContract();
+    const tokenContract = await readOnlyContract();
     try {
         const tokensArray = await tokenContract.tokensOfOwner(owner);
         return tokensArray;
@@ -36,7 +46,7 @@ export const tokensOfOwner = async (owner) => {
 
 //Returns all tokenIds that have been minted
 export const tokensOfAll = async () => {
-    const tokenContract = await initialiseContract();
+    const tokenContract = await readOnlyContract();
     try {
         const tokensArray = await tokenContract.tokensOfAll();
         return tokensArray;
@@ -46,7 +56,7 @@ export const tokensOfAll = async () => {
 }
 
 export const tokensRemaining = async () => {
-    const tokenContract = await initialiseContract();
+    const tokenContract = await readOnlyContract();
     try {
         const tokensMinted = await tokenContract.totalSupply();
         const maxSupply = await tokenContract.MAX_SUPPLY();
@@ -57,7 +67,7 @@ export const tokensRemaining = async () => {
 }
 
 export const getPrice = async () => {
-    const tokenContract = await initialiseContract();
+    const tokenContract = await readOnlyContract();
     try {
         const price = await tokenContract.PRICE();
         return price;
@@ -67,7 +77,7 @@ export const getPrice = async () => {
 }
 
 export const getQuote = async (tokenId) => {
-    const tokenContract = await initialiseContract();
+    const tokenContract = await readOnlyContract();
     try {
         // creating filter
         const filter = tokenContract.filters.Quote(null, tokenId);
@@ -79,7 +89,7 @@ export const getQuote = async (tokenId) => {
 }
 
 export const ownerOf = async (tokenId) => {
-    const tokenContract = await initialiseContract();
+    const tokenContract = await readOnlyContract();
     try {
         const owner = await tokenContract.ownerOf(tokenId);
         return owner;
