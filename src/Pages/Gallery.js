@@ -119,7 +119,7 @@ function Gallery() {
                                 </CardActions>
                             </Card>
                         </Grid>
-                    ))};
+                    ))}
                 </Grid>
             </Container>
         </>
