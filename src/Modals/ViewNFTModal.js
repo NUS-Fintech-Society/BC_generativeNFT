@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Nft from '../util/nft';
+import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
 const useStyles = makeStyles({
     modal: {
@@ -35,13 +36,27 @@ const useStyles = makeStyles({
     },
     descContainer: {
         padding: '20px',
-        maxWidth: '300px',
+        maxWidth: '315px',
         margin: 'auto 0',
 
     },
     description: {
         fontFamily: `"Nunito", sans-serif`,
         marginBottom: '20px'
+    },
+    quote: {
+        fontFamily: `"Nunito", sans-serif`,
+        marginBottom: '50px'
+    },
+    address: {
+        fontFamily: `"Nunito", sans-serif`,
+        marginBottom: '20px',
+        fontSize: '12px'
+    },
+    addressContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     }
 
 });
@@ -78,9 +93,16 @@ function ViewNFTModal(props) {
                             <Typography variant="h5" className={classes.description}>
                                 {props.collection}
                             </Typography>
-                            <Typography variant="h5" className={classes.description}>
+                            <Typography variant="h5" className={classes.quote}>
                                 "{props.quote}"
                             </Typography>
+                            <Box className={classes.addressContainer}>
+                                <Typography className={classes.address}>
+                                    Minted by:
+                                </Typography>
+                                <WalletAddressDisplay address={props.address} variant="small" />
+                            </Box>
+
                         </Box>
 
                     </Box>

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { connectWallet, getCurrentWalletConnected } from "../util/interact.js";
 import ViewNFTModal from '../Modals/ViewNFTModal';
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
-import { tokensOfOwner, getQuote, ownerOf} from "../util/contract.js";
+import { tokensOfOwner, getQuote } from "../util/contract.js";
 
 const useStyles = makeStyles({
     addressBlock: {
@@ -82,41 +82,45 @@ function Profile() {
     const [walletAddress, setWallet] = useState("");
     const [nfts, setNfts] = useState([]);
 
+    async function generateTokensOfOwner(address) {
+        tokensOfOwner(address).then((ownerNFTs) => {
+            const ownedNFTs = [];
+            for (let i = 0; i < ownerNFTs.length; i++) {
+                let tokenId = ownerNFTs[i].toString();
+
+                //Retrieve Quote
+                getQuote(parseInt(tokenId)).then((quote) => {
+                    let nft = {
+                        id: tokenId,
+                        image: '/images/nft_collections/sonobe_orbs_and_jewels/' + tokenId + '.png',
+                        collection: 'Sonobe: Orbs and Jewels',
+                        quote: quote,
+                        ownerAddress: address
+                    }
+
+                    if (!ownedNFTs.some(nft => nft.id === tokenId)) {
+                        //Updates original array with newly retrieved NFT
+                        ownedNFTs.push(nft);
+
+                        //Creates a new array with the NFTs
+                        const updatedNFTArray = [];
+                        updatedNFTArray.push(...ownedNFTs);
+                        updatedNFTArray.sort(function (nft1, nft2) { return nft1.id - nft2.id });
+
+                        //Updates the nfts array to rerender
+                        setNfts(updatedNFTArray);
+                    }
+                });
+            }
+        });
+    }
+
     useEffect(() => {
         async function load() {
             const connectedWalletAddress = await getCurrentWalletConnected();
             setWallet(connectedWalletAddress);
             addWalletListener();
-
-            tokensOfOwner(connectedWalletAddress).then((ownerNFTs) => {
-                const ownedNFTs = [];
-                for (let i = 0; i < ownerNFTs.length; i++) {
-                    let tokenId = ownerNFTs[i].toString();
-
-                    //Retrieve Quote
-                    getQuote(parseInt(tokenId)).then((quote) => {
-                        let nft = {
-                            id: tokenId,
-                            image: '/images/nft_collections/first_collection/' + tokenId + '.png',
-                            collection: 'The First Collection',
-                            quote: quote
-                        }
-
-                        if (!ownedNFTs.some(nft => nft.id === tokenId)) {
-                            //Updates original array with newly retrieved NFT
-                            ownedNFTs.push(nft);
-
-                            //Creates a new array with the NFTs
-                            const updatedNFTArray = [];
-                            updatedNFTArray.push(...ownedNFTs);
-                            updatedNFTArray.sort(function (nft1, nft2) { return nft1.id - nft2.id });
-
-                            //Updates the nfts array to rerender
-                            setNfts(updatedNFTArray);
-                        }
-                    });
-                }
-            });
+            generateTokensOfOwner(connectedWalletAddress);
 
         }
 
@@ -133,6 +137,7 @@ function Profile() {
             window.ethereum.on("accountsChanged", (accounts) => {
                 if (accounts.length > 0) {
                     setWallet(accounts[0]);
+                    generateTokensOfOwner(accounts[0]);
                 } else {
                     setWallet("");
                 }
@@ -146,7 +151,7 @@ function Profile() {
         <>
             <Box className={classes.profileDetailsBlock}>
                 <Box className={classes.walletBlock}>
-                    <WalletAddressDisplay address={walletAddress} />
+                    <WalletAddressDisplay address={walletAddress} variant="big" />
                     <Box>
                         {/* If connected */}
                         {(walletAddress.length > 0) ? (
@@ -198,7 +203,7 @@ function Profile() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <ViewNFTModal id={nft.id} image={nft.image} quote={nft.quote} collection={nft.collection} />
+                                    <ViewNFTModal id={nft.id} image={nft.image} quote={nft.quote} collection={nft.collection} address={nft.ownerAddress} />
                                 </CardActions>
                             </Card>
                         </Grid>

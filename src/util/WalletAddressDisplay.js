@@ -3,7 +3,7 @@ import { Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-    addressBlock: {
+    addressBlockBig: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -11,11 +11,25 @@ const useStyles = makeStyles({
         height: '200px'
 
     },
-    addressLine: {
+    addressBlockSmall: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100px',
+        height: '100px'
+    },
+    addressLineBig: {
         fontFamily: `"Nunito", sans-serif`,
         fontWeight: '600',
+        fontSize: '22px',
         display: 'inline-block'
 
+    },
+    addressLineSmall: {
+        fontFamily: `"Nunito", sans-serif`,
+        fontWeight: '400',
+        fontSize: '12px',
+        display: 'inline-block'
     }
 })
 
@@ -24,6 +38,18 @@ const useStyles = makeStyles({
 function WalletAddressDisplay(props) {
     const classes = useStyles();
     let address = props.address;
+    let variant = props.variant;
+    let selectedBoxStyle;
+    let selectedTypoStyle;
+
+    if (variant === "small") {
+        selectedBoxStyle = classes.addressBlockSmall;
+        selectedTypoStyle = classes.addressLineSmall;
+    } else if (variant === "big") {
+        selectedBoxStyle = classes.addressBlockBig;
+        selectedTypoStyle = classes.addressLineBig;
+    }
+    
     let addressBlock = [];
     if (address !== null) {
         for (let i = 0; i < address.length; i = i + 10) {
@@ -32,9 +58,9 @@ function WalletAddressDisplay(props) {
     }
     return (
         <>
-            <Box className={classes.addressBlock}>
+            <Box className={selectedBoxStyle}>
                 {addressBlock.map(block => (
-                    <Typography variant='h6' className={classes.addressLine} key={block}>
+                    <Typography className={selectedTypoStyle} key={block}>
                         {block}
                     </Typography>
                 ))}

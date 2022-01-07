@@ -5,12 +5,12 @@ import MintNFTModal from '../Modals/MintNFTModal';
 import { connectWallet, getCurrentWalletConnected, checkNetwork } from "../util/interact.js";
 import WalletAddressDisplay from '../util/WalletAddressDisplay';
 
-import firstCollectionBanner from '../assets/images/first_collection_banner.png'
+import sonobeOrbsAndJewels from '../assets/images/sonobe_orbs_and_jewels_banner.png'
 
 const nftCollection1 = {
-    name: 'The First Collection',
+    name: 'Sonobe: Orbs and Jewels',
     description: 'The first collection of NFTs for NUS Fintech Society',
-    image: firstCollectionBanner,
+    image: sonobeOrbsAndJewels,
     accessCode: 'NUSFintechSociety'
 }
 
@@ -133,7 +133,7 @@ function Mint() {
         <>
             <Box className={classes.profileDetailsBlock}>
                 <Box className={classes.walletBlock}>
-                    <WalletAddressDisplay address={walletAddress} />
+                    <WalletAddressDisplay address={walletAddress} variant="big" />
                     <Box>
                         {/* If connected */}
                         {(walletAddress.length > 0) ? (

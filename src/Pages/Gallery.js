@@ -2,7 +2,7 @@ import { Grid, Card, CardMedia, CardContent, Container, Typography, CardActions,
 import { makeStyles } from '@material-ui/core/styles';
 import React, { useState, useEffect } from 'react';
 import ViewNFTModal from '../Modals/ViewNFTModal';
-import { tokensOfAll, getQuote } from "../util/contract.js";
+import { tokensOfAll, getQuote, ownerOf } from "../util/contract.js";
 
 const useStyles = makeStyles({
     heading: {
@@ -40,20 +40,22 @@ function Gallery() {
     const classes = useStyles();
     const [nfts, setNfts] = useState([]);
 
-    useEffect(() => {
-        async function load() {
-            tokensOfAll().then((nFTs) => {
-                const ownedNFTs = [];
-                for (let i = 0; i < nFTs.length; i++) {
-                    let tokenId = nFTs[i].toString();
+    async function generateTokensOfAll() {
+        tokensOfAll().then((nFTs) => {
+            const ownedNFTs = [];
+            for (let i = 0; i < nFTs.length; i++) {
+                let tokenId = nFTs[i].toString();
 
-                    //Retrieve Quote
-                    getQuote(parseInt(tokenId)).then((quote) => {
+                //Retrieve Quote
+                getQuote(parseInt(tokenId)).then((quote) => {
+
+                    ownerOf(parseInt(tokenId)).then((address) => {
                         let nft = {
                             id: tokenId,
-                            image: '/images/nft_collections/first_collection/' + tokenId + '.png',
-                            collection: 'The First Collection',
-                            quote: quote
+                            image: '/images/nft_collections/sonobe_orbs_and_jewels/' + tokenId + '.png',
+                            collection: 'Sonobe: Orbs and Jewels',
+                            quote: quote,
+                            ownerAddress: address
                         }
 
                         if (!ownedNFTs.some(nft => nft.id === tokenId)) {
@@ -69,11 +71,14 @@ function Gallery() {
                             setNfts(updatedNFTArray);
                         }
                     });
-                }
-            });
-        }
 
-        load();
+                });
+            }
+        });
+    }
+
+    useEffect(() => {
+        generateTokensOfAll();
     }, []);
 
     return (
@@ -84,7 +89,7 @@ function Gallery() {
                 </Typography>
                 <Typography variant="h6" align="center" className={classes.description} paragraph>
                     Welcome to the Gallery. This is where you can view all
-                    NFTs that have been minted so far. Click on one to interact with it.
+                    NFTs that have been minted so far. To interact with an NFT, click "View", click and hold the NFT with your cursor.
                 </Typography>
             </Container>
             <Container className={classes.cardGrid} maxWidth="md">
@@ -111,7 +116,7 @@ function Gallery() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <ViewNFTModal id={nft.id} image={nft.image} quote={nft.quote} collection={nft.collection} />
+                                    <ViewNFTModal id={nft.id} image={nft.image} quote={nft.quote} collection={nft.collection} address={nft.ownerAddress} />
                                 </CardActions>
                             </Card>
                         </Grid>

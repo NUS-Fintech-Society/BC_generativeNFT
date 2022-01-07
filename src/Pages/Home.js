@@ -55,13 +55,13 @@ function Home() {
                 </Typography>
                 <Box className={classes.newsBlock}>
                     <Typography variant="h5" align="left" className={classes.newsTitle}>
-                        First Collection is Live<span className={classes.newsDate}>30 Dec 2021</span>
+                        Sonobe: Orbs and Jewels is Live<span className={classes.newsDate}>7 Jan 2022</span>
                     </Typography>
                     <Typography variant="h6" align="left" className={classes.description} paragraph>
                         The original team of developers has created the first collection of
-                        NUS Fintech Society NFTs. This is a collection of 300 NFTs which are not only unique, but interactive as well.
+                        NUS Fintech Society NFTs. This is a collection of 250 NFTs which are not only unique, but interactive as well.
                         This collections explores the beauty of the Sonobe module used to build modular origami. 
-                        The combination of simple shapes to form a more complex but intriguing pattern.
+                        The combination of simple shapes to form a more complex but intriguing pattern. 
                         Go mint yourself a one-off ERC721 NFT today!
                     </Typography>
                 </Box>
