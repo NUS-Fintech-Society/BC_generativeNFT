@@ -115,7 +115,7 @@ function Gallery() {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <ViewNFTModal id={nft.id} image={nft.image} quote={nft.quote} collection={nft.collection} address={nft.ownerAddress} />
+                                    <ViewNFTModal id={nft.id} quote={nft.quote} collection={nft.collection} address={nft.ownerAddress} />
                                 </CardActions>
                             </Card>
                         </Grid>

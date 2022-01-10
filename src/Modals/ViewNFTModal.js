@@ -30,10 +30,6 @@ const useStyles = makeStyles({
         borderRadius: '5px',
 
     },
-    image: {
-        width: '100%',
-        maxWidth: '400px',
-    },
     descContainer: {
         padding: '20px',
         maxWidth: '315px',
