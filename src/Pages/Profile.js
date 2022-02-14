@@ -185,7 +185,7 @@ function Profile() {
                     {nfts.length == 0 && (
                         <>
                             <Typography variant="h4" align="center" className={classes.loading} >
-                                Loading...
+                                No NFTs yet...
                             </Typography>
                         </>
                     )}
@@ -208,7 +208,7 @@ function Profile() {
                                 </CardActions>
                             </Card>
                         </Grid>
-                    ))};
+                    ))}
 
                 </Grid>
             </Container>
